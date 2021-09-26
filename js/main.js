@@ -14,3 +14,5 @@ function checkLength(line, maxLength) {
   }
   return false;
 }
+console.log(getRandomInt(15, 90));
+console.log(checkLength("abc", 3));
