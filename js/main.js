@@ -15,4 +15,4 @@ function checkLength(line, maxLength) {
   }
   return false;
 }
-checkLength("abc", 3);
+checkLength('abc', 3);
