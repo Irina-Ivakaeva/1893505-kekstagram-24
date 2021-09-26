@@ -7,6 +7,7 @@ function getRandomInt(from, to) {
   }
   return Math.floor(Math.random() * (max - min)) + min;
 }
+getRandomInt(15, 90);
 
 function checkLength(line, maxLength) {
   if (line.length === maxLength) {
@@ -14,5 +15,4 @@ function checkLength(line, maxLength) {
   }
   return false;
 }
-console.log(getRandomInt(15, 90));
-console.log(checkLength("abc", 3));
+checkLength("abc", 3);
