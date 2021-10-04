@@ -44,8 +44,6 @@ for (let el=1; el<=25; el++) {
       id: el + 100,
       avatar: `img/avatar-{{${getRandomInt(1, 6)}}}.svg`,
       message: STRINGS[getRandomInt(0, 5)],
-      name: NAMES[getRandomInt(0, 9)]
-    }
-  };
+      name: NAMES[getRandomInt(0, 9)]}};
   PHOTOS.push(obj);
 }
