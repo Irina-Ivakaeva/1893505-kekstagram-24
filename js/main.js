@@ -34,15 +34,8 @@ const STRINGS = [
   'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'];
 const QUANTITY_PHOTOS = 25;
-let generateRandomUserData = function() {
-  let photos = [];
-  for (let photoIndex=1; photoIndex<=QUANTITY_PHOTOS; photoIndex++) {
-    photos.push(returnRandomPhoto(photoIndex));
-  }
-  return photos;
-}
 
-let returnRandomPhoto = function(index) {
+const returnRandomPhoto = function(index) {
   const obj = {
     id: index,
     url: `photos/{{${index}}}.jpg`,
@@ -56,10 +49,18 @@ let returnRandomPhoto = function(index) {
   return obj;
 };
 
-let getRandomMessage = function() {
+const getRandomMessage = function() {
   return STRINGS[getRandomInt(0, STRINGS.length - 1)];
 };
 
-let getRandomName = function() {
+const getRandomName = function() {
   return NAMES[getRandomInt(0, NAMES.length - 1)];
+};
+
+const generateRandomUserData = function() {
+  const photos = [];
+  for (let photoIndex=1; photoIndex<=QUANTITY_PHOTOS; photoIndex++) {
+    photos.push(returnRandomPhoto(photoIndex));
+  }
+  return photos;
 };
