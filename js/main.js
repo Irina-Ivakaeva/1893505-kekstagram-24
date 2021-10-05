@@ -33,17 +33,33 @@ const STRINGS = [
   'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
   'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'];
-const PHOTOS = [];
-for (let el=1; el<=25; el++) {
+const QUANTITY_PHOTOS = 25;
+let generateRandomUserData = function() {
+  let photos = [];
+  for (let photoIndex=1; photoIndex<=QUANTITY_PHOTOS; photoIndex++) {
+    photos.push(returnRandomPhoto(photoIndex));
+  }
+  return photos;
+}
+
+let returnRandomPhoto = function(index) {
   const obj = {
-    id: el,
-    url: `photos/{{${el}}}.jpg`,
-    description: `Описание ${el}`,
+    id: index,
+    url: `photos/{{${index}}}.jpg`,
+    description: `Описание ${index}`,
     likes: getRandomInt(15, 200),
     comments: {
-      id: el + 100,
+      id: index + 100,
       avatar: `img/avatar-{{${getRandomInt(1, 6)}}}.svg`,
-      message: STRINGS[getRandomInt(0, 5)],
-      name: NAMES[getRandomInt(0, 9)]}};
-  PHOTOS.push(obj);
-}
+      message: getRandomMessage(),
+      name: getRandomName()}};
+  return obj;
+};
+
+let getRandomMessage = function() {
+  return STRINGS[getRandomInt(0, STRINGS.length - 1)];
+};
+
+let getRandomName = function() {
+  return NAMES[getRandomInt(0, NAMES.length - 1)];
+};
