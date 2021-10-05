@@ -35,6 +35,14 @@ const STRINGS = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'];
 const QUANTITY_PHOTOS = 25;
 
+const getRandomMessage = function() {
+  return STRINGS[getRandomInt(0, STRINGS.length - 1)];
+};
+
+const getRandomName = function() {
+  return NAMES[getRandomInt(0, NAMES.length - 1)];
+};
+
 const returnRandomPhoto = function(index) {
   const obj = {
     id: index,
@@ -49,14 +57,6 @@ const returnRandomPhoto = function(index) {
   return obj;
 };
 
-const getRandomMessage = function() {
-  return STRINGS[getRandomInt(0, STRINGS.length - 1)];
-};
-
-const getRandomName = function() {
-  return NAMES[getRandomInt(0, NAMES.length - 1)];
-};
-
 const generateRandomUserData = function() {
   const photos = [];
   for (let photoIndex=1; photoIndex<=QUANTITY_PHOTOS; photoIndex++) {
@@ -64,3 +64,5 @@ const generateRandomUserData = function() {
   }
   return photos;
 };
+
+generateRandomUserData();
