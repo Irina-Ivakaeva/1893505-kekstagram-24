@@ -35,6 +35,8 @@ const STRINGS = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'];
 const QUANTITY_PHOTOS = 25;
 
+const COMMENTS = [];
+
 const getRandomMessage = function() {
   return STRINGS[getRandomInt(0, STRINGS.length - 1)];
 };
@@ -43,18 +45,31 @@ const getRandomName = function() {
   return NAMES[getRandomInt(0, NAMES.length - 1)];
 };
 
+const returnRandomComment = function(numberComment) {
+  return { id: numberComment + 100,
+    avatar: `img/avatar-${getRandomInt(1, 6)}.svg`,
+    message: getRandomMessage(),
+    name: getRandomName()};
+};
+
+const generateComments = function() {
+  for (let numberComment = 1; numberComment <= 10; numberComment++) {
+    COMMENTS.push(returnRandomComment(numberComment));
+  }
+};
+
+const getRandomComment = function() {
+  generateComments();
+  return COMMENTS[getRandomInt(0, COMMENTS.length - 1)];
+};
+
 const returnRandomPhoto = function(index) {
-  const obj = {
+  return {
     id: index,
-    url: `photos/{{${index}}}.jpg`,
+    url: `photos/${index}.jpg`,
     description: `Описание ${index}`,
     likes: getRandomInt(15, 200),
-    comments: {
-      id: index + 100,
-      avatar: `img/avatar-{{${getRandomInt(1, 6)}}}.svg`,
-      message: getRandomMessage(),
-      name: getRandomName()}};
-  return obj;
+    comments: getRandomComment()};
 };
 
 const generateRandomUserData = function() {
