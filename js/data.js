@@ -1,26 +1,13 @@
 import getRandomInt from './util.js';
-import getRandomMessage from './util.js';
-import getRandomName from './util.js';
+import {NAMES, STRINGS, QUANTITY_PHOTOS} from './constants.js';
 
-const NAMES = [
-  'Артем',
-  'Борис',
-  'Екатерина',
-  'Алексей',
-  'Инна',
-  'Маргарита',
-  'Денис',
-  'Наталья',
-  'Владимир',
-  'Оксана'];
-const STRINGS = [
-  'Всё отлично!',
-  'В целом всё неплохо. Но не всё.',
-  'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
-  'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
-  'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
-  'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'];
-const QUANTITY_PHOTOS = 25;
+const getRandomMessage = function() {
+  return STRINGS[getRandomInt(0, STRINGS.length - 1)];
+};
+
+const getRandomName = function() {
+  return NAMES[getRandomInt(0, NAMES.length - 1)];
+};
 
 const returnRandomComment = function(numberComment) {
   return { id: numberComment + 100,
@@ -56,4 +43,4 @@ const generateRandomUserData = function() {
 };
 
 export {generateRandomUserData};
-export {NAMES, STRINGS};
+

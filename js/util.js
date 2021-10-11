@@ -1,5 +1,3 @@
-import {NAMES, STRINGS} from './data.js';
-
 function getRandomInt(from, to) {
   from = Math.ceil(from);
   to = Math.floor(to);
@@ -17,12 +15,4 @@ function checkLength(checkedElement, maxLength) {
 }
 checkLength('abc', 3);
 
-const getRandomMessage = function() {
-  return STRINGS[getRandomInt(0, STRINGS.length - 1)];
-};
-
-const getRandomName = function() {
-  return NAMES[getRandomInt(0, NAMES.length - 1)];
-};
-
-export {getRandomInt, getRandomName, getRandomMessage};
+export {getRandomInt};
