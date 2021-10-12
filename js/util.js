@@ -1,4 +1,4 @@
-function getRandomInt(from, to) {
+const getRandomInt = function(from, to) {
   from = Math.ceil(from);
   to = Math.floor(to);
   if (to <= from) {
@@ -7,12 +7,12 @@ function getRandomInt(from, to) {
     throw new Error ('Введенные параметры должны быть больше или равны нулю');
   }
   return Math.floor(Math.random() * (to - from)) + from;
-}
+};
 getRandomInt(15, 90);
 
-function checkLength(checkedElement, maxLength) {
+const checkLength = function(checkedElement, maxLength) {
   return checkedElement.length === maxLength;
-}
+};
 checkLength('abc', 3);
 
 export {getRandomInt};

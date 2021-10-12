@@ -43,4 +43,3 @@ const generateRandomUserData = function() {
 };
 
 export {generateRandomUserData};
-
