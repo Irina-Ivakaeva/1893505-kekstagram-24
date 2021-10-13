@@ -1,4 +1,4 @@
-import getRandomInt from './util.js';
+import {getRandomInt} from './util.js';
 import {NAMES, STRINGS, QUANTITY_PHOTOS} from './constants.js';
 
 const getRandomMessage = function() {
