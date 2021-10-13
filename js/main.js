@@ -1,3 +1,3 @@
-import generateRandomUserData from './data.js';
+import {generateRandomUserData} from './data.js';
 
 generateRandomUserData();
