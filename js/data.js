@@ -10,7 +10,7 @@ const getRandomName = function() {
 };
 
 const returnRandomComment = function(numberComment) {
-  return { id: numberComment + 100,
+  return { commentId: numberComment + 100,
     avatar: `img/avatar-${getRandomInt(1, 6)}.svg`,
     message: getRandomMessage(),
     name: getRandomName()};
