@@ -28,7 +28,7 @@ const generateComments = function() {
 const returnRandomPhoto = function(index) {
   return {
     id: index,
-    url: `photos/${index}.jpg`,
+    url: `photos/${getRandomInt(1, 25)}.jpg`,
     description: `Описание ${index}`,
     likes: getRandomInt(15, 200),
     comments: generateComments()};
