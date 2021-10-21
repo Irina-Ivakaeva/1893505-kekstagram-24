@@ -10,7 +10,7 @@ const getRandomName = function() {
 };
 
 const returnRandomComment = function(numberComment) {
-  return { id: numberComment + 100,
+  return { commentId: numberComment + 100,
     avatar: `img/avatar-${getRandomInt(1, 6)}.svg`,
     message: getRandomMessage(),
     name: getRandomName()};
@@ -28,7 +28,7 @@ const generateComments = function() {
 const returnRandomPhoto = function(index) {
   return {
     id: index,
-    url: `photos/${index}.jpg`,
+    url: `photos/${getRandomInt(1, 25)}.jpg`,
     description: `Описание ${index}`,
     likes: getRandomInt(15, 200),
     comments: generateComments()};
