@@ -6,7 +6,7 @@ function checkFirstElement(element) {
 // Проверка, что введденые символы это строка или число
 function checkAscii(arrayElements) {
   let check = false;
-  arrayElements.forEach(element => {
+  arrayElements.forEach((element) => {
     const item = element.charCodeAt(0);
     if (item <= 57 && item >= 48){
       check = true;
@@ -38,7 +38,7 @@ function checkMaxLength(array) {
 function checkDoubleHashTag(array) {
   const trueArray = [];
   let count = 0;
-  array.forEach(element => {
+  array.forEach((element) => {
     if (trueArray.indexOf(element) === -1) {
       trueArray.push(element);
     } else {
@@ -51,7 +51,7 @@ function checkDoubleHashTag(array) {
 // Все проверки для поля Хэштэг
 function checkAllHash(array) {
   let checkCount = 0;
-  array.forEach(element => {
+  array.forEach((element) => {
     const elementArray = element.split('');
     if (checkFirstElement(elementArray[0]) || checkAscii(elementArray.slice(1)) || checkOneLength(elementArray) || checkMaxLength(elementArray)) {
       checkCount++;

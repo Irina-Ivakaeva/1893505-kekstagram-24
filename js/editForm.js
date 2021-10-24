@@ -1,6 +1,11 @@
 import {checkAllHash, allChecksComment} from './checks.js';
 
-function getFile(inputFile) {
+// Очистка значения у полей
+function clearValue(input) {
+  input.value = null;
+}
+
+function getFile() {
   const modalWindow = document.querySelector('.img-upload__overlay');
   modalWindow.classList.remove('hidden');
   document.querySelector('body').classList.add('modal-open');
@@ -16,11 +21,6 @@ function closeEditImgWindow(inputPole) {
   clearValue(inputPole);
   clearValue(document.querySelector('input.text__hashtags'));
   clearValue(document.querySelector('textarea.text__description'));
-}
-
-// Очистка значения у полей
-function clearValue(input) {
-  input.value = null;
 }
 
 // Запуск всех проверок для поля Хэштэг
