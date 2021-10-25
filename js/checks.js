@@ -1,5 +1,5 @@
 // хэш-тег начинается с символа # (решётка) / хэш-теги разделяются пробелами;
-function checkFirstElement(element) {
+function firstSymbolIsHashTag(element) {
   return element === '#';
 }
 
@@ -24,14 +24,10 @@ function checkOneLength(array) {
   return array.length > 1;
 }
 
-// нельзя указать больше пяти хэш-тегов;
-function checkFiveLength(array) {
-  return array.length <= 5;
-}
-
-// максимальная длина одного хэш-тега 20 символов, включая решётку;
-function checkMaxLength(array) {
-  return array.length <= 20;
+// нельзя указать больше пяти хэш-тегов / максимальная длина одного хэш-тега 20 символов, включая решётку;
+// максимальная длина комментария 140
+function checkLengthElement(element, maxLength) {
+  return element.length <= maxLength;
 }
 
 // один и тот же хэш-тег не может быть использован дважды;
@@ -53,23 +49,19 @@ function checkAllHash(array) {
   let checkCount = 0;
   array.forEach((element) => {
     const elementArray = element.split('');
-    if (checkFirstElement(elementArray[0]) || checkAscii(elementArray.slice(1)) || checkOneLength(elementArray) || checkMaxLength(elementArray)) {
+    if (!firstSymbolIsHashTag(elementArray[0]) || !checkAscii(elementArray.slice(1)) || !checkOneLength(elementArray) || !checkLengthElement(elementArray, 20)) {
       checkCount++;
     }
   });
-  if (checkDoubleHashTag(array) || checkFiveLength(array)) {
+  if (!checkDoubleHashTag(array) || !checkLengthElement(array, 5)) {
     checkCount++;
   }
   return checkCount === 0;
 }
 
-function checkCommentLength(comment) {
-  return comment.length <= 140;
-}
-
 // Все проверки для поля Комментарий (пока только одна)
 function allChecksComment(comment) {
-  return checkCommentLength(comment);
+  return checkLengthElement(comment, 140);
 }
 
 export {checkAllHash, allChecksComment};
