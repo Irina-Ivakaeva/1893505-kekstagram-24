@@ -52,13 +52,11 @@ submitBtn.addEventListener('click', () => {
   checkValidComment(inputComment);
 });
 
-// Ошибка: Не работает inputHashtag !== document.activeElement
+// Ошибка: Не работает inputComment !== document.activeElement
 document.onkeydown = function(element) {
   const keyCode = element.keyCode;
+
   if (keyCode === ESC && inputHashtag !== document.activeElement) {
-    closeEditImgWindow(modalWindow);
-    clearAllValue();
-  } else if (keyCode === ESC && inputComment !== document.activeElement) {
     closeEditImgWindow(modalWindow);
     clearAllValue();
   }

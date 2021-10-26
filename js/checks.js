@@ -3,7 +3,7 @@ function firstSymbolIsHashTag(element) {
   return element === '#';
 }
 
-// Проверка, что введденые символы это строка или число
+// Проверка, что введденые символы это буквы или числа
 function checkAscii(arrayElements) {
   let check = false;
   arrayElements.forEach((element) => {
@@ -13,7 +13,7 @@ function checkAscii(arrayElements) {
     } else if ((item >= 65 && item <= 90) || (item >= 97 && item <= 122)) {
       check = true;
     } else {
-      check = false;
+      return false;
     }
   });
   return check;
@@ -35,8 +35,8 @@ function checkDoubleHashTag(array) {
   const trueArray = [];
   let count = 0;
   array.forEach((element) => {
-    if (trueArray.indexOf(element) === -1) {
-      trueArray.push(element);
+    if (trueArray.indexOf(element.toUpperCase()) === -1) {
+      trueArray.push(element.toUpperCase());
     } else {
       count++;
     }
@@ -44,9 +44,18 @@ function checkDoubleHashTag(array) {
   return count === 0;
 }
 
+function checkEmptyValue(value) {
+  return value.length === 1 && value[0] === '';
+}
+
 // Все проверки для поля Хэштэг
 function checkAllHash(array) {
   let checkCount = 0;
+
+  if (checkEmptyValue(array)) {
+    return true;
+  }
+
   array.forEach((element) => {
     const elementArray = element.split('');
     if (!firstSymbolIsHashTag(elementArray[0]) || !checkAscii(elementArray.slice(1)) || !checkOneLength(elementArray) || !checkLengthElement(elementArray, 20)) {
@@ -61,6 +70,9 @@ function checkAllHash(array) {
 
 // Все проверки для поля Комментарий (пока только одна)
 function allChecksComment(comment) {
+  if (checkEmptyValue(comment)) {
+    true;
+  }
   return checkLengthElement(comment, 140);
 }
 

@@ -20,8 +20,8 @@ function closeEditImgWindow(modalWindow) {
 
 // Запуск всех проверок для поля Хэштэг
 function checkValidHash(inputBox) {
-  const inputValue = inputBox.value.split(' ');
-  if (!checkAllHash(inputValue)) {
+  const inputValueArray = inputBox.value.split(' ');
+  if (!checkAllHash(inputValueArray)) {
     inputBox.setCustomValidity('Вы ввели неверный хэштэг!');
   } else {
     inputBox.setCustomValidity('');
@@ -30,9 +30,11 @@ function checkValidHash(inputBox) {
 
 // Запуск проверок для поля Комментарий
 function checkValidComment(inputComment) {
-  const comment = inputComment.value;
+  const comment = inputComment.value.split('');
   if (!allChecksComment(comment)) {
     inputComment.setCustomValidity('Вы ввели неверный комментарий!');
+  } else {
+    inputComment.setCustomValidity('');
   }
 }
 
