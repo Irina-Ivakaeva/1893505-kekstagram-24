@@ -1,3 +1,10 @@
+const minimalNumber = 48;
+const maximalNumber = 57;
+const minimalUpperChar = 65;
+const maximalUpperChar = 90;
+const minimalLowerChar = 97;
+const maximalLowerChar = 122;
+
 // хэш-тег начинается с символа # (решётка) / хэш-теги разделяются пробелами;
 function firstSymbolIsHashTag(element) {
   return element === '#';
@@ -8,9 +15,9 @@ function checkAscii(arrayElements) {
   let check = false;
   arrayElements.forEach((element) => {
     const item = element.charCodeAt(0);
-    if (item <= 57 && item >= 48){
+    if (item <= maximalNumber && item >= minimalNumber){
       check = true;
-    } else if ((item >= 65 && item <= 90) || (item >= 97 && item <= 122)) {
+    } else if ((item >= minimalUpperChar && item <= maximalUpperChar) || (item >= minimalLowerChar && item <= maximalLowerChar)) {
       check = true;
     } else {
       return false;
@@ -57,8 +64,9 @@ function checkAllHash(array) {
   }
 
   array.forEach((element) => {
-    const elementArray = element.split('');
-    if (!firstSymbolIsHashTag(elementArray[0]) || !checkAscii(elementArray.slice(1)) || !checkOneLength(elementArray) || !checkLengthElement(elementArray, 20)) {
+    const [firstElement, ...otherElement] = element;
+    if (!firstSymbolIsHashTag(firstElement) || !checkAscii(otherElement) || !checkOneLength(element)
+    || !checkLengthElement(element, 20)) {
       checkCount++;
     }
   });

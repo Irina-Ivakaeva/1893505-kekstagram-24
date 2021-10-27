@@ -2,7 +2,7 @@ import {generateRandomUserData} from './data.js';
 import {drawElement} from './draw-pictures.js';
 import { editPostForm, openModalWindow, closeEditImgWindow, checkValidHash, checkValidComment, clearValue } from './editForm.js';
 
-const ESC = 27;
+const ESC = 'Escape';
 const photoContainer = document.querySelector('.pictures');
 const photo = generateRandomUserData();
 
@@ -54,9 +54,9 @@ submitBtn.addEventListener('click', () => {
 
 // Ошибка: Не работает inputComment !== document.activeElement
 document.onkeydown = function(element) {
-  const keyCode = element.keyCode;
+  const keyCode = element.key;
 
-  if (keyCode === ESC && inputHashtag !== document.activeElement) {
+  if (keyCode === ESC && inputHashtag !== document.activeElement && inputComment !== document.activeElement) {
     closeEditImgWindow(modalWindow);
     clearAllValue();
   }
