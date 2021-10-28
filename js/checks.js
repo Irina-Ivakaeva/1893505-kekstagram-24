@@ -1,9 +1,4 @@
-const minimalNumber = 48;
-const maximalNumber = 57;
-const minimalUpperChar = 65;
-const maximalUpperChar = 90;
-const minimalLowerChar = 97;
-const maximalLowerChar = 122;
+import {NUMBER_CHARS} from './constants.js';
 
 // хэш-тег начинается с символа # (решётка) / хэш-теги разделяются пробелами;
 function firstSymbolIsHashTag(element) {
@@ -15,9 +10,10 @@ function checkAscii(arrayElements) {
   let check = false;
   arrayElements.forEach((element) => {
     const item = element.charCodeAt(0);
-    if (item <= maximalNumber && item >= minimalNumber){
+    if (item <= NUMBER_CHARS.maximalNumber && item >= NUMBER_CHARS.minimalNumber){
       check = true;
-    } else if ((item >= minimalUpperChar && item <= maximalUpperChar) || (item >= minimalLowerChar && item <= maximalLowerChar)) {
+    } else if ((item >= NUMBER_CHARS.minimalUpperChar && item <= NUMBER_CHARS.maximalUpperChar) ||
+    (item >= NUMBER_CHARS.minimalLowerChar && item <= NUMBER_CHARS.maximalLowerChar)) {
       check = true;
     } else {
       return false;
@@ -76,10 +72,10 @@ function checkAllHash(array) {
   return checkCount === 0;
 }
 
-// Все проверки для поля Комментарий (пока только одна)
+// Все проверки для поля Комментарий
 function allChecksComment(comment) {
   if (checkEmptyValue(comment)) {
-    true;
+    return true;
   }
   return checkLengthElement(comment, 140);
 }

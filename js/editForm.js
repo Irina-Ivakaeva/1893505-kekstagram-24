@@ -23,18 +23,22 @@ function checkValidHash(inputBox) {
   const inputValueArray = inputBox.value.split(' ');
   if (!checkAllHash(inputValueArray)) {
     inputBox.setCustomValidity('Вы ввели неверный хэштэг!');
+    return false;
   } else {
     inputBox.setCustomValidity('');
+    return true;
   }
 }
 
 // Запуск проверок для поля Комментарий
 function checkValidComment(inputComment) {
-  const comment = inputComment.value.split('');
+  const comment = inputComment.value;
   if (!allChecksComment(comment)) {
     inputComment.setCustomValidity('Вы ввели неверный комментарий!');
+    return false;
   } else {
     inputComment.setCustomValidity('');
+    return true;
   }
 }
 

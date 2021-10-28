@@ -1,8 +1,8 @@
 import {generateRandomUserData} from './data.js';
 import {drawElement} from './draw-pictures.js';
 import { editPostForm, openModalWindow, closeEditImgWindow, checkValidHash, checkValidComment, clearValue } from './editForm.js';
+import {ESC} from './constants.js';
 
-const ESC = 'Escape';
 const photoContainer = document.querySelector('.pictures');
 const photo = generateRandomUserData();
 
@@ -15,22 +15,7 @@ if (inputPhoto) {
 
 const modalWindow = document.querySelector('.img-upload__overlay');
 const inputHashtag = document.querySelector('input.text__hashtags');
-
-if (inputHashtag) {
-  inputHashtag.addEventListener('click', () => {
-    document.activeElement.blur();
-    inputHashtag.focus();
-  });
-}
-
 const inputComment = document.querySelector('textarea.text__description');
-
-if (inputComment) {
-  inputComment.addEventListener('click', () => {
-    document.activeElement.blur();
-    inputComment.focus();
-  });
-}
 
 function clearAllValue() {
   clearValue(inputPhoto);
@@ -48,19 +33,19 @@ if(closeBtn) {
 
 const submitBtn = document.querySelector('button#upload-submit');
 submitBtn.addEventListener('click', () => {
-  checkValidHash(inputHashtag);
-  checkValidComment(inputComment);
+  if (checkValidHash(inputHashtag) &&  checkValidComment(inputComment)) {
+    true;
+  }
 });
 
-// Ошибка: Не работает inputComment !== document.activeElement
-document.onkeydown = function(element) {
+document.addEventListener('keydown', (element) => {
   const keyCode = element.key;
 
   if (keyCode === ESC && inputHashtag !== document.activeElement && inputComment !== document.activeElement) {
     closeEditImgWindow(modalWindow);
     clearAllValue();
   }
-};
+});
 
 drawElement(photo, photoContainer);
 editPostForm();
