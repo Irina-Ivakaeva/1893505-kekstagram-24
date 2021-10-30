@@ -1,3 +1,4 @@
+
 const NAMES = [
   'Артем',
   'Борис',
@@ -18,4 +19,15 @@ const STRINGS = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'];
 const QUANTITY_PHOTOS = 25;
 
-export {NAMES, STRINGS, QUANTITY_PHOTOS};
+const NUMBER_CHARS = {
+  minimalNumber: 48,
+  maximalNumber: 57,
+  minimalUpperChar: 65,
+  maximalUpperChar: 90,
+  minimalLowerChar: 97,
+  maximalLowerChar: 122,
+};
+
+const ESC = 'Escape';
+
+export {NAMES, STRINGS, QUANTITY_PHOTOS, ESC, NUMBER_CHARS};
