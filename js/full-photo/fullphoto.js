@@ -16,7 +16,7 @@ function getOpenPhoto(element, photos) {
   const clickPhotoId = element.dataset.id;
   let fullElement;
   photos.forEach((photo) => {
-    if (clickPhotoId == photo.id) {
+    if (Number(clickPhotoId) === photo.id) {
       fullElement = photo;
     }
   });
