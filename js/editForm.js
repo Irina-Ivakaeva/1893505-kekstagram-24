@@ -9,6 +9,7 @@ function clearValue(input) {
 function checkValidHash(inputBox) {
   const inputValueArray = inputBox.value.split(' ');
   if (checkAllHash(inputValueArray)) {
+    inputBox.setCustomValidity('');
     return true;
   }
   inputBox.setCustomValidity('Вы ввели неверный хэштэг!');

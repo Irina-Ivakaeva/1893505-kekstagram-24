@@ -8,17 +8,18 @@ const fullPhotoCommentsCount = fullPhoto.querySelector('.comments-count');
 const socialCommentsWrapper = fullPhoto.querySelector('.social__comments');
 const socialCaption = fullPhoto.querySelector('.social__caption');
 const btnFullPhotoClose = document.querySelector('#picture-cancel');
+const avatarAlt = 'Аватар комментатора фотографии';
+const avatarSize = '35';
 let isOpenFullPhoto = false;
 
 function getOpenPhoto(element, photos) {
-  const clickPhotoUrl = element.src.replace('http://localhost:3000/', '');
+  const clickPhotoId = element.dataset.id;
   let fullElement;
-  for (let index = 0; index < photos.length; index++) {
-    if (clickPhotoUrl === photos[index].url) {
-      fullElement = photos[index];
-      break;
+  photos.forEach((photo) => {
+    if (clickPhotoId == photo.id) {
+      fullElement = photo;
     }
-  }
+  });
   return fullElement;
 }
 
@@ -31,23 +32,8 @@ btnFullPhotoClose.addEventListener('click', () => {
   closeFullPhoto();
 });
 
-// Не поняла как работать с таким шаблоном, создавала вручную (function addComments)
-/*function getCommentTemplate() {
-  return `<li class="social__comment">
-  <img
-      class="social__picture"
-      src="{{аватар}}"
-      alt="{{имя комментатора}}"
-      width="35" height="35">
-  <p class="social__text">{{текст комментария}}</p>
-</li>`;
-}*/
-
 function clearDefaultComments() {
-  const defaultComments = socialCommentsWrapper.querySelectorAll('.social__comment');
-  defaultComments.forEach((element) => {
-    socialCommentsWrapper.removeChild(element);
-  });
+  socialCommentsWrapper.innerHTML = '';
 }
 
 function addComments(arrayComments) {
@@ -57,9 +43,9 @@ function addComments(arrayComments) {
     const imgTag = document.createElement('img');
     imgTag.classList.add('social__picture');
     imgTag.src = comment.avatar;
-    imgTag.alt = 'Аватар комментатора фотографии';
-    imgTag.width = '35';
-    imgTag.height = '35';
+    imgTag.alt = avatarAlt;
+    imgTag.width = avatarSize;
+    imgTag.height = avatarSize;
     const pTag = document.createElement('p');
     pTag.classList.add('social__text');
     pTag.textContent = comment.message;
@@ -74,22 +60,22 @@ function setComments(arrayComments) {
   addComments(arrayComments);
 }
 
-function setData(element, photos) {
-  const photoObject = getOpenPhoto(element, photos);
+function setData(photoObject) {
   fullPhotoImg.src = photoObject.url;
   fullPhotoLikes.textContent = photoObject.likes;
   fullPhotoCommentsCount.textContent = photoObject.comments.length;
   socialCaption.textContent = photoObject.description;
-  setComments(photoObject.comments);
 }
 
 function openFullPhoto(element, photos) {
+  const photoObject = getOpenPhoto(element, photos);
   isOpenFullPhoto = true;
   socialComment.classList.add('hidden');
   loader.classList.add('hidden');
   body.classList.add('modal-open');
   fullPhoto.classList.remove('hidden');
-  setData(element, photos);
+  setData(photoObject);
+  setComments(photoObject.comments);
 }
 
 export {openFullPhoto, isOpenFullPhoto, closeFullPhoto};
