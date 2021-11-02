@@ -36,22 +36,32 @@ function clearDefaultComments() {
   socialCommentsWrapper.innerHTML = '';
 }
 
+function generateFragment() {
+  const fragment = document.createDocumentFragment();
+  const liTag = document.createElement('li');
+  liTag.classList.add('social__comment');
+  const imgTag = document.createElement('img');
+  imgTag.classList.add('social__picture');
+  const pTag = document.createElement('p');
+  pTag.classList.add('social__text');
+  liTag.appendChild(imgTag);
+  liTag.appendChild(pTag);
+  fragment.append(liTag);
+
+  return fragment;
+}
+
 function addComments(arrayComments) {
   arrayComments.forEach((comment) => {
-    const liTag = document.createElement('li');
-    liTag.classList.add('social__comment');
-    const imgTag = document.createElement('img');
-    imgTag.classList.add('social__picture');
+    const fragment = generateFragment();
+    const imgTag = fragment.querySelector('img');
     imgTag.src = comment.avatar;
     imgTag.alt = avatarAlt;
     imgTag.width = avatarSize;
     imgTag.height = avatarSize;
-    const pTag = document.createElement('p');
-    pTag.classList.add('social__text');
+    const pTag = fragment.querySelector('p');
     pTag.textContent = comment.message;
-    liTag.appendChild(imgTag);
-    liTag.appendChild(pTag);
-    socialCommentsWrapper.appendChild(liTag);
+    socialCommentsWrapper.appendChild(fragment);
   });
 }
 
