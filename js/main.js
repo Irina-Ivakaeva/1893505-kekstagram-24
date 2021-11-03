@@ -2,7 +2,8 @@ import {generateRandomUserData} from './data.js';
 import {drawElement} from './draw-pictures.js';
 import { addAttributesToForm, checkValidHash, checkValidComment, clearAllValue } from './editForm.js';
 import {ESC} from './constants.js';
-import {openModal, closeModal} from './modal/modal.js';
+import {openModal, closeModal, isOpenModal} from './modal/modal.js';
+import {openFullPhoto, isOpenFullPhoto, closeFullPhoto} from './full-photo/fullphoto.js';
 
 const photoContainer = document.querySelector('.pictures');
 const photo = generateRandomUserData();
@@ -36,10 +37,24 @@ submitBtn.addEventListener('click', () => {
 
 document.addEventListener('keydown', (element) => {
   const keyCode = element.key;
-  const isActiveHashtag = inputHashtag === document.activeElement;
-  const isActiveComment = inputComment === document.activeElement;
-  if (keyCode === ESC && !isActiveHashtag && !isActiveComment) {
-    return closeModalAndClearValues();
+  if (keyCode === ESC && isOpenFullPhoto) {
+    return closeFullPhoto();
+  }
+
+  if (keyCode === ESC && isOpenModal) {
+    const isActiveHashtag = inputHashtag === document.activeElement;
+    const isActiveComment = inputComment === document.activeElement;
+    if (keyCode === ESC && !isActiveHashtag && !isActiveComment) {
+      return closeModalAndClearValues();
+    }
+  }
+});
+
+document.addEventListener('click', (evt) => {
+  const element = evt.target;
+  const isPhoto = element.closest('.picture');
+  if (isPhoto) {
+    openFullPhoto(element, photo);
   }
 });
 

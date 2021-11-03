@@ -6,11 +6,12 @@ function getHTMLTemplate(selector1) {
 
 function generatePhotoTemplate(template, photos) {
   const fragment = document.createDocumentFragment();
-  photos.forEach(({url, likes, comments}) =>
+  photos.forEach(({id, url, likes, comments}) =>
   {
     const element = template.cloneNode(true);
     const img = element.querySelector('img');
     img.src = url;
+    img.setAttribute('data-id', id);
 
     const commentTemplate = element.querySelector('.picture__comments');
     commentTemplate.textContent = comments.length;

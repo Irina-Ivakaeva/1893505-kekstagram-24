@@ -1,6 +1,7 @@
 
 const modalOverlay = document.querySelector('.img-upload__overlay');
 const bodyNode = document.querySelector('body');
+let isOpenModal = false;
 
 function toggleModal(flag) {
   modalOverlay.classList.toggle('hidden', !flag);
@@ -8,11 +9,13 @@ function toggleModal(flag) {
 }
 
 function openModal() {
+  isOpenModal = true;
   toggleModal(true);
 }
 
 function closeModal() {
+  isOpenModal = false;
   toggleModal(false);
 }
 
-export {openModal, closeModal};
+export {openModal, closeModal, isOpenModal};
