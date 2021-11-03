@@ -14,12 +14,7 @@ let isOpenFullPhoto = false;
 
 function getOpenPhoto(element, photos) {
   const clickPhotoId = element.dataset.id;
-  let fullElement;
-  photos.forEach((photo) => {
-    if (Number(clickPhotoId) === photo.id) {
-      fullElement = photo;
-    }
-  });
+  const fullElement = photos.find((photo) => photo.id === Number(clickPhotoId));
   return fullElement;
 }
 
@@ -36,14 +31,18 @@ function clearDefaultComments() {
   socialCommentsWrapper.innerHTML = '';
 }
 
-function generateFragment() {
-  const fragment = document.createDocumentFragment();
+function appendComment(fragment, comment) {
   const liTag = document.createElement('li');
   liTag.classList.add('social__comment');
   const imgTag = document.createElement('img');
   imgTag.classList.add('social__picture');
   const pTag = document.createElement('p');
   pTag.classList.add('social__text');
+  imgTag.src = comment.avatar;
+  imgTag.alt = avatarAlt;
+  imgTag.width = avatarSize;
+  imgTag.height = avatarSize;
+  pTag.textContent = comment.message;
   liTag.appendChild(imgTag);
   liTag.appendChild(pTag);
   fragment.append(liTag);
@@ -52,16 +51,9 @@ function generateFragment() {
 }
 
 function addComments(arrayComments) {
+  const fragment = document.createDocumentFragment();
   arrayComments.forEach((comment) => {
-    const fragment = generateFragment();
-    const imgTag = fragment.querySelector('img');
-    imgTag.src = comment.avatar;
-    imgTag.alt = avatarAlt;
-    imgTag.width = avatarSize;
-    imgTag.height = avatarSize;
-    const pTag = fragment.querySelector('p');
-    pTag.textContent = comment.message;
-    socialCommentsWrapper.appendChild(fragment);
+    socialCommentsWrapper.appendChild(appendComment(fragment, comment));
   });
 }
 
