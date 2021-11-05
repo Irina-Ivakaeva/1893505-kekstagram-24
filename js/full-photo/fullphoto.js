@@ -10,6 +10,7 @@ const socialCaption = fullPhoto.querySelector('.social__caption');
 const btnFullPhotoClose = document.querySelector('#picture-cancel');
 const avatarAlt = 'Аватар комментатора фотографии';
 const avatarSize = '35';
+const maxCountComments = 5;
 let isOpenFullPhoto = false;
 let commentCount = 0;
 let photoObject;
@@ -55,17 +56,16 @@ function appendComment(fragment, comment) {
 
 function addComments(arrayComments) {
   const fragment = document.createDocumentFragment();
-  for (let el = 0; el < 5; el++) {
-    if (arrayComments.length <= 5) {
-      loader.classList.add('hidden');
-    }
+  if (arrayComments.length <= 5) {
+    loader.classList.add('hidden');
+  }
+  for (let el = 0; el < maxCountComments; el++) {
     if (commentCount === arrayComments.length) {
       loader.classList.add('hidden');
       break;
-    } else {
-      socialCommentsWrapper.appendChild(appendComment(fragment, arrayComments[commentCount]));
-      commentCount++;
     }
+    socialCommentsWrapper.appendChild(appendComment(fragment, arrayComments[commentCount]));
+    commentCount++;
   }
   socialComment.textContent = `${commentCount} из ${arrayComments.length} комментариев`;
 }
@@ -88,7 +88,7 @@ function openFullPhoto(element, photos) {
   loader.classList.remove('hidden');
   body.classList.add('modal-open');
   fullPhoto.classList.remove('hidden');
-  setData(photoObject);
+  setData();
   setComments(photoObject.comments);
 }
 
