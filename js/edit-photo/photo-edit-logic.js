@@ -1,4 +1,3 @@
-import {checkAllHash, allChecksComment} from './checks.js';
 
 let postScaleValue;
 const mainImage = document.querySelector('.img-upload__preview');
@@ -23,7 +22,7 @@ function changeImageEffect(effectType) {
 }
 
 // Создание слайдера и обработчик передвижения слайдера
-function createSlider(stepEffect, maxSize, effectType) {
+function createSlider(stepEffect, maxSize) {
   if (sliderElement.noUiSlider === undefined) {
     noUiSlider.create(sliderElement, {
       range: {
@@ -36,21 +35,21 @@ function createSlider(stepEffect, maxSize, effectType) {
   }
   sliderElement.noUiSlider.on('update', (...rest) => {
     const value = rest[2][0];
-    switch (effectType) {
+    switch (actualEffect) {
       case 'effects__preview--chrome':
-        effectChrome.filter = (`grayscale(${value})`);
+        mainImage.style.filter = (`grayscale(${value})`);
         break;
       case 'effects__preview--sepia':
-        effectSepia.filter = (`sepia(${value})`);
+        mainImage.style.filter = (`sepia(${value})`);
         break;
       case 'effects__preview--marvin':
-        effectMarvin.filter = (`invert(${value})`);
+        mainImage.style.filter = (`invert(${value}%)`);
         break;
       case 'effects__preview--phobos':
-        effectPhobos.filter = (`blur(${value}px)`);
+        mainImage.style.filter = (`blur(${value}px)`);
         break;
       case 'effects__preview--heat':
-        effectHeat.filter = (`brightness(${value})`);
+        mainImage.style.filter = (`brightness(${value})`);
         break;
     }
   });
@@ -60,6 +59,7 @@ function createSlider(stepEffect, maxSize, effectType) {
 function hideUiSlider() {
   if (sliderElement.noUiSlider !== undefined) {
     sliderElement.noUiSlider.destroy();
+    mainImage.style.filter = null;
   }
 }
 
@@ -78,31 +78,31 @@ effectOriginal.addEventListener('click', () => {
 effectChrome.addEventListener('click', () => {
   hideUiSlider();
   changeImageEffect('effects__preview--chrome');
-  createSlider(0.1, 1, 'effects__preview--chrome');
+  createSlider(0.1, 1);
 });
 
 effectSepia.addEventListener('click', () => {
   hideUiSlider();
   changeImageEffect('effects__preview--sepia');
-  createSlider(0.1, 1, 'effects__preview--sepia');
+  createSlider(0.1, 1);
 });
 
 effectMarvin.addEventListener('click', () => {
   hideUiSlider();
   changeImageEffect('effects__preview--marvin');
-  createSlider(1, 100, 'effects__preview--marvin');
+  createSlider(1, 100);
 });
 
 effectPhobos.addEventListener('click', () => {
   hideUiSlider();
   changeImageEffect('effects__preview--phobos');
-  createSlider(0.1, 3, 'effects__preview--phobos');
+  createSlider(0.1, 3);
 });
 
 effectHeat.addEventListener('click', () => {
   hideUiSlider();
   changeImageEffect('effects__preview--heat');
-  createSlider(0.1, 1, 'effects__preview--heat');
+  createSlider(0.1, 1);
 });
 
 // Уменьшение размера фото
@@ -123,43 +123,4 @@ scaleValueBigger.addEventListener('click', () => {
   scaleValue.value = `${postScaleValue}%`;
 });
 
-// Очистка значения у полей
-function clearValue(input) {
-  input.value = null;
-}
-
-// Запуск всех проверок для поля Хэштэг
-function checkValidHash(inputBox) {
-  const inputValueArray = inputBox.value.split(' ');
-  if (checkAllHash(inputValueArray)) {
-    inputBox.setCustomValidity('');
-    return true;
-  }
-  inputBox.setCustomValidity('Вы ввели неверный хэштэг!');
-  return false;
-}
-
-// Запуск проверок для поля Комментарий
-function checkValidComment(inputComment) {
-  const comment = inputComment.value;
-  if (allChecksComment(comment)) {
-    return true;
-  }
-  inputComment.setCustomValidity('Вы ввели неверный комментарий!');
-  return false;
-}
-
-// Редактирование формы для отправки
-function addAttributesToForm(postForm) {
-  postForm.action = 'https://24.javascript.pages.academy/kekstagram';
-  postForm.method = 'POST';
-  postForm.enctype = 'multipart/form-data';
-}
-
-function clearAllValue(inputPhoto, inputHashtag, inputComment) {
-  clearValue(inputPhoto);
-  clearValue(inputHashtag);
-  clearValue(inputComment);
-}
-
-export {addAttributesToForm,  checkValidHash, checkValidComment, clearAllValue, workWithScale};
+export {workWithScale};
