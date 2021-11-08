@@ -1,6 +1,7 @@
 import {generateRandomUserData} from './data.js';
 import {drawElement} from './draw-pictures.js';
-import { addAttributesToForm, checkValidHash, checkValidComment, clearAllValue } from './editForm.js';
+import {addAttributesToForm, checkValidHash, checkValidComment, clearAllValue} from './edit-photo/editForm.js';
+import {workWithScale} from './edit-photo/photo-edit-logic.js';
 import {ESC} from './constants.js';
 import {openModal, closeModal, isOpenModal} from './modal/modal.js';
 import {openFullPhoto, isOpenFullPhoto, closeFullPhoto} from './full-photo/fullphoto.js';
@@ -16,6 +17,7 @@ const postForm = document.querySelector('.img-filters__form');
 if (inputPhoto) {
   inputPhoto.addEventListener('change', () => {
     openModal();
+    workWithScale();
   });
 }
 

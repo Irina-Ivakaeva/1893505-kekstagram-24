@@ -1,4 +1,4 @@
-import {checkAllHash, allChecksComment} from './checks.js';
+import {checkAllHash, allChecksComment} from '../checks.js';
 
 // Очистка значения у полей
 function clearValue(input) {
