@@ -5,15 +5,19 @@ import {workWithScale} from './edit-photo/photo-edit-logic.js';
 import {ESC} from './constants.js';
 import {openModal, closeModal, isOpenModal} from './modal/modal.js';
 import {openFullPhoto, isOpenFullPhoto, closeFullPhoto} from './full-photo/fullphoto.js';
+import { getData, sendData } from './remote-work.js';
+import { showAlert } from './util.js';
 
 const photoContainer = document.querySelector('.pictures');
-const photo = generateRandomUserData();
+const data1 = generateRandomUserData();
+//const photo = getData().then((data) => data);
 const inputHashtag = document.querySelector('input.text__hashtags');
 const inputComment = document.querySelector('textarea.text__description');
 const inputPhoto = document.querySelector('#upload-file');
 const closeBtn = document.querySelector('#upload-cancel');
 const submitBtn = document.querySelector('button#upload-submit');
 const postForm = document.querySelector('.img-filters__form');
+
 if (inputPhoto) {
   inputPhoto.addEventListener('change', () => {
     openModal();
@@ -33,8 +37,16 @@ if(closeBtn) {
 }
 
 submitBtn.addEventListener('click', () => {
-  checkValidHash(inputHashtag);
-  checkValidComment(inputComment);
+  if (checkValidHash(inputHashtag) && checkValidComment(inputComment)) {
+    const obj =  {
+      ph: inputPhoto,
+      hash: inputHashtag,
+      comm: inputComment,
+    };
+
+    sendData(() => obj);
+    closeModalAndClearValues();
+  }
 });
 
 document.addEventListener('keydown', (element) => {
@@ -56,9 +68,14 @@ document.addEventListener('click', (evt) => {
   const element = evt.target;
   const isPhoto = element.closest('.picture');
   if (isPhoto) {
-    openFullPhoto(element, photo);
+    getData((photo) => {
+      openFullPhoto(element, photo.slice(0));
+    });
   }
 });
 
-drawElement(photo, photoContainer);
+getData((photo) => {
+  drawElement(photo, photoContainer);
+});
+
 addAttributesToForm(postForm);
