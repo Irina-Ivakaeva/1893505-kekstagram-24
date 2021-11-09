@@ -1,4 +1,4 @@
-import {generateRandomUserData} from './data.js';
+
 import {drawElement} from './draw-pictures.js';
 import {addAttributesToForm, checkValidHash, checkValidComment, clearAllValue} from './edit-photo/editForm.js';
 import {workWithScale} from './edit-photo/photo-edit-logic.js';
@@ -6,11 +6,8 @@ import {ESC} from './constants.js';
 import {openModal, closeModal, isOpenModal} from './modal/modal.js';
 import {openFullPhoto, isOpenFullPhoto, closeFullPhoto} from './full-photo/fullphoto.js';
 import { getData, sendData } from './remote-work.js';
-import { showAlert } from './util.js';
 
 const photoContainer = document.querySelector('.pictures');
-const data1 = generateRandomUserData();
-//const photo = getData().then((data) => data);
 const inputHashtag = document.querySelector('input.text__hashtags');
 const inputComment = document.querySelector('textarea.text__description');
 const inputPhoto = document.querySelector('#upload-file');
