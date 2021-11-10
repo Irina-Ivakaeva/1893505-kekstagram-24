@@ -14,16 +14,17 @@ const inputPhoto = document.querySelector('#upload-file');
 const closeBtn = document.querySelector('#upload-cancel');
 const submitBtn = document.querySelector('button#upload-submit');
 const postForm = document.querySelector('.img-filters__form');
+const editPhotoModalWindow = document.querySelector('.img-upload__overlay');
 
 if (inputPhoto) {
   inputPhoto.addEventListener('change', () => {
-    openModal();
+    openModal(editPhotoModalWindow);
     workWithScale();
   });
 }
 
 function closeModalAndClearValues() {
-  closeModal();
+  closeModal(editPhotoModalWindow);
   clearAllValue(inputPhoto, inputHashtag, inputComment);
 }
 
@@ -36,12 +37,12 @@ if(closeBtn) {
 submitBtn.addEventListener('click', () => {
   if (checkValidHash(inputHashtag) && checkValidComment(inputComment)) {
     const obj =  {
-      ph: inputPhoto,
-      hash: inputHashtag,
-      comm: inputComment,
+      ph: inputPhoto.value,
+      hash: inputHashtag.value,
+      comm: inputComment.value,
     };
 
-    sendData(() => obj);
+    sendData(obj);
     closeModalAndClearValues();
   }
 });
@@ -61,6 +62,10 @@ document.addEventListener('keydown', (element) => {
   }
 });
 
+getData((photo) => {
+  drawElement(photo, photoContainer);
+});
+
 document.addEventListener('click', (evt) => {
   const element = evt.target;
   const isPhoto = element.closest('.picture');
@@ -69,10 +74,6 @@ document.addEventListener('click', (evt) => {
       openFullPhoto(element, photo.slice(0));
     });
   }
-});
-
-getData((photo) => {
-  drawElement(photo, photoContainer);
 });
 
 addAttributesToForm(postForm);

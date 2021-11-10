@@ -3,16 +3,20 @@ import { showErrorSend, showSuccessSend } from './util.js';
 
 const getData = (onSuccess) => {
   fetch('https://24.javascript.pages.academy/kekstagram/data')
-    .then((response) => response.json())
-    .then((wizards) => {
-      onSuccess(wizards);
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error(`${response.status} ${response.statusText}`);
+    })
+    .then((data) => {
+      onSuccess(data);
     }).catch((err) => {
       showAlert(`При загрузке данных произошла ошибка \n ${err}`);
     });
 };
 
 const sendData = (post) => {
-
   fetch(
     'https://24.javascript.pages.academy/kekstagram',
     {

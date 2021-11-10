@@ -1,6 +1,19 @@
-import {closeModal} from './modal/modal.js';
+import {openModal, closeModal} from './modal/modal.js';
+const modalOverlay = document.querySelector('.img-upload__overlay');
 const ALERT_SHOW_TIME = 5000;
 const body = document.querySelector('body');
+let elementRemoved;
+const alertParams = {
+  zIndex: 100,
+  position: 'absolute',
+  left: 0,
+  top: 0,
+  right: 0,
+  padding: '10px 3px',
+  fontSize: '30px',
+  textAlign: 'center',
+  backgroundColor: 'red',
+};
 
 const getRandomInt = function(from, to) {
   from = Math.ceil(from);
@@ -21,16 +34,9 @@ checkLength('abc', 3);
 
 const showAlert = (message) => {
   const alertContainer = document.createElement('div');
-  alertContainer.style.zIndex = 100;
-  alertContainer.style.position = 'absolute';
-  alertContainer.style.left = 0;
-  alertContainer.style.top = 0;
-  alertContainer.style.right = 0;
-  alertContainer.style.padding = '10px 3px';
-  alertContainer.style.fontSize = '30px';
-  alertContainer.style.textAlign = 'center';
-  alertContainer.style.backgroundColor = 'red';
-
+  for (const key in alertParams) {
+    alertContainer.style[key] = alertParams[key];
+  }
   alertContainer.textContent = message;
 
   document.body.append(alertContainer);
@@ -41,25 +47,24 @@ const showAlert = (message) => {
 };
 
 function workWithModal(button) {
-  body.classList.add('modal-open');
-  const elementRemoved = document.querySelector('section[data="removed"]');
-
+  elementRemoved = document.querySelector('section[data="removed"]');
+  openModal(elementRemoved);
   button.addEventListener('click', () => {
     body.removeChild(elementRemoved);
-    body.classList.remove('modal-open');
-  });
-
-  document.addEventListener('click', (el) => {
-    if(!el.target.classList.contains('error__inner')) {
-      body.removeChild(elementRemoved);
-      body.classList.remove('modal-open');
-    }
+    closeModal(elementRemoved);
   });
 }
 
-function showErrorSend() {
-  closeModal();
-  const templateFragment = document.querySelector('#error').content;
+document.addEventListener('click', (el) => {
+  const isSendInfoWindow = el.target.classList.contains('error__inner');
+  if(!isSendInfoWindow && elementRemoved) {
+    body.removeChild(elementRemoved);
+    closeModal(elementRemoved);
+  }
+});
+
+function createSendWindow(windowType) {
+  const templateFragment = document.querySelector(windowType).content;
   const template = templateFragment.querySelector('section');
   const element = template.cloneNode(true);
   element.setAttribute('data', 'removed');
@@ -69,16 +74,14 @@ function showErrorSend() {
   workWithModal(errorButton);
 }
 
-function showSuccessSend() {
-  closeModal();
-  const templateFragment = document.querySelector('#success').content;
-  const template = templateFragment.querySelector('section');
-  const element = template.cloneNode(true);
-  element.setAttribute('data', 'removed');
-  const closeButton = element.querySelector('.error__button');
-  body.appendChild(element);
+function showErrorSend() {
+  closeModal(modalOverlay);
+  createSendWindow('#error');
+}
 
-  workWithModal(closeButton);
+function showSuccessSend() {
+  closeModal(modalOverlay);
+  createSendWindow('#success');
 }
 
 export {getRandomInt, showAlert, showErrorSend, showSuccessSend};
