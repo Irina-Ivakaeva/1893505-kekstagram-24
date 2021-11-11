@@ -1,7 +1,7 @@
 import {showErrorSend, showSuccessSend} from './modal/AjaxModals.js';
 import {showAlert} from './alerts/send-alert.js';
 
-const myFetch = (url, options, onSuccess, onFailed) => {
+function myFetch(url, options, onSuccess, onFailed) {
   return fetch(url, options)
     .then((response) => {
       if (response.ok) {
@@ -13,14 +13,15 @@ const myFetch = (url, options, onSuccess, onFailed) => {
     .catch(() => {
       onFailed && onFailed();
     });
-};
+}
 
 const getData = () => {
   const url = 'https://24.javascript.pages.academy/kekstagram/data';
   const options = {};
   const failedFunction = () => showAlert('При загрузке данных произошла ошибка');
   return myFetch(url, options, null, failedFunction)
-    .then((response) => response.json);
+    .then((response) => response.json())
+    .then((data) => data);
 };
 
 const sendData = (post) => {
@@ -34,7 +35,7 @@ const sendData = (post) => {
   };
   const FailedFunction = showErrorSend;
   const SuccessFunction = showSuccessSend;
-  return myFetch(url, options, SuccessFunction, FailedFunction)
+  return myFetch(url, options, SuccessFunction, FailedFunction);
 };
 
 export {getData, sendData};
