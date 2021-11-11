@@ -28,10 +28,7 @@ const sendData = (post) => {
   const url = 'https://24.javascript.pages.academy/kekstagram';
   const options = {
     method: 'POST',
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-    body: JSON.stringify(post),
+    post,
   };
   const FailedFunction = showErrorSend;
   const SuccessFunction = showSuccessSend;

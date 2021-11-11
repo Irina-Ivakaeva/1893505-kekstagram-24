@@ -13,7 +13,8 @@ const inputComment = document.querySelector('textarea.text__description');
 const inputPhoto = document.querySelector('#upload-file');
 const closeBtn = document.querySelector('#upload-cancel');
 const submitBtn = document.querySelector('button#upload-submit');
-const postForm = document.querySelector('.img-filters__form');
+//const postForm = document.querySelector('.img-filters__form');
+const postForm = document.querySelector('#upload-select-image');
 const editPhotoModalWindow = document.querySelector('.img-upload__overlay');
 
 if (inputPhoto) {
@@ -34,15 +35,14 @@ if(closeBtn) {
   });
 }
 
-submitBtn.addEventListener('click', (err) => {
+submitBtn.addEventListener('click', (event) => {
   if (checkValidHash(inputHashtag) && checkValidComment(inputComment)) {
-    const obj =  {
-      ph: inputPhoto.value,
-      hash: inputHashtag.value,
-      comm: inputComment.value,
-    };
-    err.preventDefault();
-    sendData(obj);
+    const formData = new FormData();
+    formData.append('photo', inputPhoto.value);
+    formData.append('hashTag', inputHashtag.value);
+    formData.append('comment', inputComment.value);
+    event.preventDefault();
+    sendData(formData);
     closeModalAndClearValues();
   }
 });
