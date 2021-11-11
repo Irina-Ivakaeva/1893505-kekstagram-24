@@ -34,14 +34,14 @@ if(closeBtn) {
   });
 }
 
-submitBtn.addEventListener('click', () => {
+submitBtn.addEventListener('click', (err) => {
   if (checkValidHash(inputHashtag) && checkValidComment(inputComment)) {
     const obj =  {
       ph: inputPhoto.value,
       hash: inputHashtag.value,
       comm: inputComment.value,
     };
-
+    err.preventDefault();
     sendData(obj);
     closeModalAndClearValues();
   }
@@ -62,17 +62,18 @@ document.addEventListener('keydown', (element) => {
   }
 });
 
-getData((photo) => {
-  drawElement(photo, photoContainer);
+let photosFromServer = null;
+
+getData().then((photos) => {
+  photosFromServer = photos;
+  drawElement(photos, photoContainer);
 });
 
 document.addEventListener('click', (evt) => {
   const element = evt.target;
   const isPhoto = element.closest('.picture');
   if (isPhoto) {
-    getData((photo) => {
-      openFullPhoto(element, photo.slice(0));
-    });
+    openFullPhoto(element, photosFromServer);
   }
 });
 
