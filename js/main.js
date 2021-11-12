@@ -16,10 +16,16 @@ const submitBtn = document.querySelector('button#upload-submit');
 const postForm = document.querySelector('#upload-select-image');
 const editPhotoModalWindow = document.querySelector('.img-upload__overlay');
 
+function clearErrorBorder() {
+  inputHashtag.classList.remove('error_field');
+  inputComment.classList.remove('error_field');
+}
+
 if (inputPhoto) {
   inputPhoto.addEventListener('change', () => {
     openModal(editPhotoModalWindow);
     workWithScale();
+    clearErrorBorder();
   });
 }
 
@@ -43,6 +49,12 @@ submitBtn.addEventListener('click', (event) => {
     event.preventDefault();
     sendData(formData);
     closeModalAndClearValues();
+  }
+  if (!checkValidHash(inputHashtag)) {
+    inputHashtag.classList.add('error_field');
+  }
+  if (!checkValidComment(inputComment)) {
+    inputComment.classList.add('error_field');
   }
 });
 

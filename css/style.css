@@ -710,6 +710,16 @@ main {
   border-radius: 5px;
 }
 
+.text__hashtags.error_field {
+  border-width: 4px;
+  border-color: red;
+}
+
+.text__description.error_field {
+  border-width: 4px;
+  border-color: red;
+}
+
 
 /**
  * Кнопка для отправки изображения

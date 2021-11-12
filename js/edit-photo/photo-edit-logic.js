@@ -5,7 +5,7 @@ const scaleValue = document.querySelector('.scale__control--value');
 const scaleValueSmaller = document.querySelector('.scale__control--smaller');
 const scaleValueBigger = document.querySelector('.scale__control--bigger');
 
-let actualEffect = 'none';
+let actualEffect;
 const effectOriginal = document.querySelector('.effects__preview--none');
 const effectChrome = document.querySelector('.effects__preview--chrome');
 const effectSepia = document.querySelector('.effects__preview--sepia');
@@ -16,10 +16,9 @@ const effectHeat = document.querySelector('.effects__preview--heat');
 const sliderElement = document.querySelector('.effect-level__slider');
 
 function changeImageEffect(effectType) {
-  const fullEffectName = `effects__preview--${effectType}`;
-  mainImage.classList.remove(fullEffectName);
+  mainImage.classList.remove(`effects__preview--${actualEffect}`);
   actualEffect = effectType;
-  mainImage.classList.add(fullEffectName);
+  mainImage.classList.add(`effects__preview--${actualEffect}`);
 }
 
 // Создание слайдера и обработчик передвижения слайдера
@@ -37,19 +36,19 @@ function createSlider(stepEffect, maxSize) {
   sliderElement.noUiSlider.on('update', (...rest) => {
     const value = rest[2][0];
     switch (actualEffect) {
-      case 'effects__preview--chrome':
+      case 'chrome':
         mainImage.style.filter = (`grayscale(${value})`);
         break;
-      case 'effects__preview--sepia':
+      case 'sepia':
         mainImage.style.filter = (`sepia(${value})`);
         break;
-      case 'effects__preview--marvin':
+      case 'marvin':
         mainImage.style.filter = (`invert(${value}%)`);
         break;
-      case 'effects__preview--phobos':
+      case 'phobos':
         mainImage.style.filter = (`blur(${value}px)`);
         break;
-      case 'effects__preview--heat':
+      case 'heat':
         mainImage.style.filter = (`brightness(${value})`);
         break;
     }
@@ -67,6 +66,7 @@ function hideUiSlider() {
 function workWithScale() {
   postScaleValue = 100;
   scaleValue.value = `${postScaleValue}%`;
+  mainImage.style.transform = (`scale(${postScaleValue / 100})`);
   changeImageEffect('none');
   hideUiSlider();
 }

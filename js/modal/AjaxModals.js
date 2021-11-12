@@ -11,20 +11,20 @@ function workWithModal(button) {
     elementRemoved.remove();
     closeModal(elementRemoved);
   });
+
+  document.addEventListener('keydown', (element) => {
+    const keyCode = element.key;
+    if (keyCode === ESC && elementRemoved) {
+      elementRemoved.remove();
+      closeModal(elementRemoved);
+    }
+  });
 }
 
 document.addEventListener('click', (el) => {
   const isErrorInfoWindow = el.target.classList.contains('error__inner');
   const isSuccessInfoWindow = el.target.classList.contains('success__inner');
   if(!(isErrorInfoWindow || isSuccessInfoWindow) && elementRemoved) {
-    elementRemoved.remove();
-    closeModal(elementRemoved);
-  }
-});
-
-document.addEventListener('keydown', (element) => {
-  const keyCode = element.key;
-  if (keyCode === ESC) {
     elementRemoved.remove();
     closeModal(elementRemoved);
   }
