@@ -1,7 +1,7 @@
 
 import {drawElement} from './draw-pictures.js';
 import {addAttributesToForm, checkValidHash, checkValidComment, clearAllValue} from './edit-photo/editForm.js';
-import {workWithScale} from './edit-photo/photo-edit-logic.js';
+import {workWithScale, postScaleValue, actualEffect} from './edit-photo/photo-edit-logic.js';
 import {ESC} from './constants.js';
 import {openModal, closeModal, isOpenModal} from './modal/modal.js';
 import {openFullPhoto, isOpenFullPhoto, closeFullPhoto} from './full-photo/fullphoto.js';
@@ -13,7 +13,6 @@ const inputComment = document.querySelector('textarea.text__description');
 const inputPhoto = document.querySelector('#upload-file');
 const closeBtn = document.querySelector('#upload-cancel');
 const submitBtn = document.querySelector('button#upload-submit');
-//const postForm = document.querySelector('.img-filters__form');
 const postForm = document.querySelector('#upload-select-image');
 const editPhotoModalWindow = document.querySelector('.img-upload__overlay');
 
@@ -38,9 +37,9 @@ if(closeBtn) {
 submitBtn.addEventListener('click', (event) => {
   if (checkValidHash(inputHashtag) && checkValidComment(inputComment)) {
     const formData = new FormData();
-    formData.append('photo', inputPhoto.value);
-    formData.append('hashTag', inputHashtag.value);
-    formData.append('comment', inputComment.value);
+    formData.append('filename', inputPhoto.files[0]);
+    formData.append('scale', postScaleValue);
+    formData.append('effect', actualEffect);
     event.preventDefault();
     sendData(formData);
     closeModalAndClearValues();

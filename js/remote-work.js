@@ -8,9 +8,6 @@ function myFetch(url, options, onSuccess, onFailed) {
         onSuccess && onSuccess();
         return response;
       }
-      throw new Error(response.statusText);
-    })
-    .catch(() => {
       onFailed && onFailed();
     });
 }
@@ -28,7 +25,7 @@ const sendData = (post) => {
   const url = 'https://24.javascript.pages.academy/kekstagram';
   const options = {
     method: 'POST',
-    post,
+    body:post,
   };
   const FailedFunction = showErrorSend;
   const SuccessFunction = showSuccessSend;

@@ -5,7 +5,7 @@ const scaleValue = document.querySelector('.scale__control--value');
 const scaleValueSmaller = document.querySelector('.scale__control--smaller');
 const scaleValueBigger = document.querySelector('.scale__control--bigger');
 
-let actualEffect;
+let actualEffect = 'none';
 const effectOriginal = document.querySelector('.effects__preview--none');
 const effectChrome = document.querySelector('.effects__preview--chrome');
 const effectSepia = document.querySelector('.effects__preview--sepia');
@@ -16,9 +16,10 @@ const effectHeat = document.querySelector('.effects__preview--heat');
 const sliderElement = document.querySelector('.effect-level__slider');
 
 function changeImageEffect(effectType) {
-  mainImage.classList.remove(actualEffect);
+  const fullEffectName = `effects__preview--${effectType}`;
+  mainImage.classList.remove(fullEffectName);
   actualEffect = effectType;
-  mainImage.classList.add(actualEffect);
+  mainImage.classList.add(fullEffectName);
 }
 
 // Создание слайдера и обработчик передвижения слайдера
@@ -66,42 +67,42 @@ function hideUiSlider() {
 function workWithScale() {
   postScaleValue = 100;
   scaleValue.value = `${postScaleValue}%`;
-  changeImageEffect('effects__preview--none');
+  changeImageEffect('none');
   hideUiSlider();
 }
 
 effectOriginal.addEventListener('click', () => {
   hideUiSlider();
-  changeImageEffect('effects__preview--none');
+  changeImageEffect('none');
 });
 
 effectChrome.addEventListener('click', () => {
   hideUiSlider();
-  changeImageEffect('effects__preview--chrome');
+  changeImageEffect('chrome');
   createSlider(0.1, 1);
 });
 
 effectSepia.addEventListener('click', () => {
   hideUiSlider();
-  changeImageEffect('effects__preview--sepia');
+  changeImageEffect('sepia');
   createSlider(0.1, 1);
 });
 
 effectMarvin.addEventListener('click', () => {
   hideUiSlider();
-  changeImageEffect('effects__preview--marvin');
+  changeImageEffect('marvin');
   createSlider(1, 100);
 });
 
 effectPhobos.addEventListener('click', () => {
   hideUiSlider();
-  changeImageEffect('effects__preview--phobos');
+  changeImageEffect('phobos');
   createSlider(0.1, 3);
 });
 
 effectHeat.addEventListener('click', () => {
   hideUiSlider();
-  changeImageEffect('effects__preview--heat');
+  changeImageEffect('heat');
   createSlider(0.1, 1);
 });
 
@@ -123,4 +124,4 @@ scaleValueBigger.addEventListener('click', () => {
   scaleValue.value = `${postScaleValue}%`;
 });
 
-export {workWithScale};
+export {workWithScale, postScaleValue, actualEffect};

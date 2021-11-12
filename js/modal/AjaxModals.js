@@ -1,4 +1,5 @@
 import {openModal, closeModal} from './modal.js';
+import {ESC} from '../constants.js';
 const modalOverlay = document.querySelector('.img-upload__overlay');
 const body = document.querySelector('body');
 let elementRemoved;
@@ -7,15 +8,24 @@ function workWithModal(button) {
   elementRemoved = document.querySelector('section[data="removed"]');
   openModal(elementRemoved);
   button.addEventListener('click', () => {
-    body.removeChild(elementRemoved);
+    elementRemoved.remove();
     closeModal(elementRemoved);
   });
 }
 
 document.addEventListener('click', (el) => {
-  const isSendInfoWindow = el.target.classList.contains('error__inner');
-  if(!isSendInfoWindow && elementRemoved) {
-    body.removeChild(elementRemoved);
+  const isErrorInfoWindow = el.target.classList.contains('error__inner');
+  const isSuccessInfoWindow = el.target.classList.contains('success__inner');
+  if(!(isErrorInfoWindow || isSuccessInfoWindow) && elementRemoved) {
+    elementRemoved.remove();
+    closeModal(elementRemoved);
+  }
+});
+
+document.addEventListener('keydown', (element) => {
+  const keyCode = element.key;
+  if (keyCode === ESC) {
+    elementRemoved.remove();
     closeModal(elementRemoved);
   }
 });
@@ -25,7 +35,7 @@ function createSendWindow(windowType) {
   const template = templateFragment.querySelector('section');
   const element = template.cloneNode(true);
   element.setAttribute('data', 'removed');
-  const errorButton = element.querySelector('.error__button');
+  const errorButton = element.querySelector('button');
   body.appendChild(element);
 
   workWithModal(errorButton);
