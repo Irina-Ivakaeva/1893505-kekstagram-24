@@ -1,10 +1,10 @@
 
-import {drawElement} from './draw-pictures.js';
-import {addAttributesToForm, checkValidHash, checkValidComment, clearAllValue} from './edit-photo/editForm.js';
-import {workWithScale, postScaleValue, actualEffect} from './edit-photo/photo-edit-logic.js';
-import {ESC} from './constants.js';
-import {openModal, closeModal, isOpenModal} from './modal/modal.js';
-import {openFullPhoto, isOpenFullPhoto, closeFullPhoto} from './full-photo/fullphoto.js';
+import { drawElement } from './draw-pictures.js';
+import { addAttributesToForm, checkValidHash, checkValidComment, clearAllValue } from './edit-photo/editForm.js';
+import { workWithScale, postScaleValue, actualEffect } from './edit-photo/photo-edit-logic.js';
+import { ESC } from './constants.js';
+import { openModal, closeModal, isOpenModal } from './modal/modal.js';
+import { openFullPhoto, isOpenFullPhoto, closeFullPhoto } from './full-photo/fullphoto.js';
 import { getData, sendData } from './remote-work.js';
 
 const photoContainer = document.querySelector('.pictures');
@@ -15,6 +15,8 @@ const closeBtn = document.querySelector('#upload-cancel');
 const submitBtn = document.querySelector('button#upload-submit');
 const postForm = document.querySelector('#upload-select-image');
 const editPhotoModalWindow = document.querySelector('.img-upload__overlay');
+
+let photosFromServer = null;
 
 function clearErrorBorder() {
   inputHashtag.classList.remove('error_field');
@@ -34,28 +36,34 @@ function closeModalAndClearValues() {
   clearAllValue(inputPhoto, inputHashtag, inputComment);
 }
 
-if(closeBtn) {
+if (closeBtn) {
   closeBtn.addEventListener('click', () => {
     closeModalAndClearValues();
   });
 }
 
 submitBtn.addEventListener('click', (event) => {
-  if (checkValidHash(inputHashtag) && checkValidComment(inputComment)) {
-    const formData = new FormData();
-    formData.append('filename', inputPhoto.files[0]);
-    formData.append('scale', postScaleValue);
-    formData.append('effect', actualEffect);
-    event.preventDefault();
-    sendData(formData);
-    closeModalAndClearValues();
-  }
-  if (!checkValidHash(inputHashtag)) {
+  const isValidHashTag = checkValidHash(inputHashtag);
+  const isValidComment = checkValidComment(inputComment);
+
+  if (!isValidHashTag) {
     inputHashtag.classList.add('error_field');
+    return;
   }
-  if (!checkValidComment(inputComment)) {
+  if (!isValidComment) {
     inputComment.classList.add('error_field');
+    return;
   }
+  const formData = new FormData();
+  formData.append('filename', inputPhoto.files[0]);
+  formData.append('scale', postScaleValue);
+  formData.append('effect', actualEffect);
+  event.preventDefault();
+
+  sendData(formData)
+    .then(() => {
+      closeModalAndClearValues();
+    });
 });
 
 document.addEventListener('keydown', (element) => {
@@ -72,8 +80,6 @@ document.addEventListener('keydown', (element) => {
     }
   }
 });
-
-let photosFromServer = null;
 
 getData().then((photos) => {
   photosFromServer = photos;

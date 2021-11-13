@@ -1,36 +1,16 @@
-import {NUMBER_CHARS} from './constants.js';
+import { checkLengthElement } from './util.js';
 
-// хэш-тег начинается с символа # (решётка) / хэш-теги разделяются пробелами;
-function firstSymbolIsHashTag(element) {
-  return element === '#';
-}
+const HASHTAGS_SETTINGS = {
+  REGEXP: /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/,
+  MAX_LENGTH: 20,
+  REQUIRE_FIRST_ELEMENT: '#',
+};
 
-// Проверка, что введденые символы это буквы или числа
-function checkAscii(arrayElements) {
-  let check = false;
-  arrayElements.forEach((element) => {
-    const item = element.charCodeAt(0);
-    if (item <= NUMBER_CHARS.maximalNumber && item >= NUMBER_CHARS.minimalNumber){
-      check = true;
-    } else if ((item >= NUMBER_CHARS.minimalUpperChar && item <= NUMBER_CHARS.maximalUpperChar) ||
-    (item >= NUMBER_CHARS.minimalLowerChar && item <= NUMBER_CHARS.maximalLowerChar)) {
-      check = true;
-    } else {
-      return false;
-    }
-  });
-  return check;
-}
-
-// хеш-тег не может состоять только из одной решётки;
-function checkOneLength(array) {
-  return array.length > 1;
-}
-
-// нельзя указать больше пяти хэш-тегов / максимальная длина одного хэш-тега 20 символов, включая решётку;
-// максимальная длина комментария 140
-function checkLengthElement(element, maxLength) {
-  return element.length <= maxLength;
+// строка после решётки должна состоять из букв и чисел и не может
+// содержать пробелы, спецсимволы (#, @, $ и т. п.),
+// символы пунктуации (тире, дефис, запятая и т. п.), эмодзи и т. д.;
+function checkValues(hashTag) {
+  return HASHTAGS_SETTINGS.REGEXP.test(hashTag);
 }
 
 // один и тот же хэш-тег не может быть использован дважды;
@@ -52,21 +32,25 @@ function checkEmptyValue(value) {
 }
 
 // Все проверки для поля Хэштэг
-function checkAllHash(array) {
+function checkAllHash(arrayHashTags) {
   let checkCount = 0;
-
-  if (checkEmptyValue(array)) {
+  if (checkEmptyValue(arrayHashTags)) {
     return true;
   }
 
-  array.forEach((element) => {
-    const [firstElement, ...otherElement] = element;
-    if (!firstSymbolIsHashTag(firstElement) || !checkAscii(otherElement) || !checkOneLength(element)
-    || !checkLengthElement(element, 20)) {
-      checkCount++;
-    }
-  });
-  if (!checkDoubleHashTag(array) || !checkLengthElement(array, 5)) {
+  arrayHashTags
+    .forEach((hashTag) => {
+      const [firstElement] = hashTag;
+      if (firstElement !== HASHTAGS_SETTINGS.REQUIRE_FIRST_ELEMENT || hashTag.length === 1 ) {
+        checkCount++;
+      }
+
+      if (!checkValues(hashTag) || !checkLengthElement(hashTag, 20)) {
+        checkCount++;
+      }
+    });
+
+  if (!checkDoubleHashTag(arrayHashTags) || !checkLengthElement(arrayHashTags, 5)) {
     checkCount++;
   }
   return checkCount === 0;
@@ -80,4 +64,4 @@ function allChecksComment(comment) {
   return checkLengthElement(comment, 140);
 }
 
-export {checkAllHash, allChecksComment};
+export { checkAllHash, allChecksComment };

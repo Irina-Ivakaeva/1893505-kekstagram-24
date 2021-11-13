@@ -18,16 +18,6 @@ const STRINGS = [
   'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'];
 const QUANTITY_PHOTOS = 25;
-
-const NUMBER_CHARS = {
-  minimalNumber: 48,
-  maximalNumber: 57,
-  minimalUpperChar: 65,
-  maximalUpperChar: 90,
-  minimalLowerChar: 97,
-  maximalLowerChar: 122,
-};
-
 const ESC = 'Escape';
 
-export {NAMES, STRINGS, QUANTITY_PHOTOS, ESC, NUMBER_CHARS};
+export {NAMES, STRINGS, QUANTITY_PHOTOS, ESC};

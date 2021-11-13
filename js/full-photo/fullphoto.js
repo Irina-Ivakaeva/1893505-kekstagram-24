@@ -24,6 +24,7 @@ function getOpenPhoto(element, photos) {
 function closeFullPhoto() {
   isOpenFullPhoto = false;
   fullPhoto.classList.add('hidden');
+  body.classList.remove('modal-open');
   commentCount = 0;
 }
 
