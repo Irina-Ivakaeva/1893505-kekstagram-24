@@ -1,40 +1,69 @@
-import {generateRandomUserData} from './data.js';
-import {drawElement} from './draw-pictures.js';
-import {addAttributesToForm, checkValidHash, checkValidComment, clearAllValue} from './edit-photo/editForm.js';
-import {workWithScale} from './edit-photo/photo-edit-logic.js';
-import {ESC} from './constants.js';
-import {openModal, closeModal, isOpenModal} from './modal/modal.js';
-import {openFullPhoto, isOpenFullPhoto, closeFullPhoto} from './full-photo/fullphoto.js';
+
+import { drawElement } from './draw-pictures.js';
+import { addAttributesToForm, checkValidHash, checkValidComment, clearAllValue } from './edit-photo/editForm.js';
+import { workWithScale, postScaleValue, actualEffect } from './edit-photo/photo-edit-logic.js';
+import { ESC } from './constants.js';
+import { openModal, closeModal, isOpenModal } from './modal/modal.js';
+import { openFullPhoto, isOpenFullPhoto, closeFullPhoto } from './full-photo/fullphoto.js';
+import { getData, sendData } from './remote-work.js';
 
 const photoContainer = document.querySelector('.pictures');
-const photo = generateRandomUserData();
 const inputHashtag = document.querySelector('input.text__hashtags');
 const inputComment = document.querySelector('textarea.text__description');
 const inputPhoto = document.querySelector('#upload-file');
 const closeBtn = document.querySelector('#upload-cancel');
 const submitBtn = document.querySelector('button#upload-submit');
-const postForm = document.querySelector('.img-filters__form');
+const postForm = document.querySelector('#upload-select-image');
+const editPhotoModalWindow = document.querySelector('.img-upload__overlay');
+
+let photosFromServer = null;
+
+function clearErrorBorder() {
+  inputHashtag.classList.remove('error_field');
+  inputComment.classList.remove('error_field');
+}
+
 if (inputPhoto) {
   inputPhoto.addEventListener('change', () => {
-    openModal();
+    openModal(editPhotoModalWindow);
     workWithScale();
+    clearErrorBorder();
   });
 }
 
 function closeModalAndClearValues() {
-  closeModal();
+  closeModal(editPhotoModalWindow);
   clearAllValue(inputPhoto, inputHashtag, inputComment);
 }
 
-if(closeBtn) {
+if (closeBtn) {
   closeBtn.addEventListener('click', () => {
     closeModalAndClearValues();
   });
 }
 
-submitBtn.addEventListener('click', () => {
-  checkValidHash(inputHashtag);
-  checkValidComment(inputComment);
+submitBtn.addEventListener('click', (event) => {
+  const isValidHashTag = checkValidHash(inputHashtag);
+  const isValidComment = checkValidComment(inputComment);
+
+  if (!isValidHashTag) {
+    inputHashtag.classList.add('error_field');
+    return;
+  }
+  if (!isValidComment) {
+    inputComment.classList.add('error_field');
+    return;
+  }
+  const formData = new FormData();
+  formData.append('filename', inputPhoto.files[0]);
+  formData.append('scale', postScaleValue);
+  formData.append('effect', actualEffect);
+  event.preventDefault();
+
+  sendData(formData)
+    .then(() => {
+      closeModalAndClearValues();
+    });
 });
 
 document.addEventListener('keydown', (element) => {
@@ -52,13 +81,17 @@ document.addEventListener('keydown', (element) => {
   }
 });
 
+getData().then((photos) => {
+  photosFromServer = photos;
+  drawElement(photos, photoContainer);
+});
+
 document.addEventListener('click', (evt) => {
   const element = evt.target;
   const isPhoto = element.closest('.picture');
   if (isPhoto) {
-    openFullPhoto(element, photo);
+    openFullPhoto(element, photosFromServer);
   }
 });
 
-drawElement(photo, photoContainer);
 addAttributesToForm(postForm);

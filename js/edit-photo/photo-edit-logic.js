@@ -16,9 +16,9 @@ const effectHeat = document.querySelector('.effects__preview--heat');
 const sliderElement = document.querySelector('.effect-level__slider');
 
 function changeImageEffect(effectType) {
-  mainImage.classList.remove(actualEffect);
+  mainImage.classList.remove(`effects__preview--${actualEffect}`);
   actualEffect = effectType;
-  mainImage.classList.add(actualEffect);
+  mainImage.classList.add(`effects__preview--${actualEffect}`);
 }
 
 // Создание слайдера и обработчик передвижения слайдера
@@ -36,19 +36,19 @@ function createSlider(stepEffect, maxSize) {
   sliderElement.noUiSlider.on('update', (...rest) => {
     const value = rest[2][0];
     switch (actualEffect) {
-      case 'effects__preview--chrome':
+      case 'chrome':
         mainImage.style.filter = (`grayscale(${value})`);
         break;
-      case 'effects__preview--sepia':
+      case 'sepia':
         mainImage.style.filter = (`sepia(${value})`);
         break;
-      case 'effects__preview--marvin':
+      case 'marvin':
         mainImage.style.filter = (`invert(${value}%)`);
         break;
-      case 'effects__preview--phobos':
+      case 'phobos':
         mainImage.style.filter = (`blur(${value}px)`);
         break;
-      case 'effects__preview--heat':
+      case 'heat':
         mainImage.style.filter = (`brightness(${value})`);
         break;
     }
@@ -66,42 +66,43 @@ function hideUiSlider() {
 function workWithScale() {
   postScaleValue = 100;
   scaleValue.value = `${postScaleValue}%`;
-  changeImageEffect('effects__preview--none');
+  mainImage.style.transform = (`scale(${postScaleValue / 100})`);
+  changeImageEffect('none');
   hideUiSlider();
 }
 
 effectOriginal.addEventListener('click', () => {
   hideUiSlider();
-  changeImageEffect('effects__preview--none');
+  changeImageEffect('none');
 });
 
 effectChrome.addEventListener('click', () => {
   hideUiSlider();
-  changeImageEffect('effects__preview--chrome');
+  changeImageEffect('chrome');
   createSlider(0.1, 1);
 });
 
 effectSepia.addEventListener('click', () => {
   hideUiSlider();
-  changeImageEffect('effects__preview--sepia');
+  changeImageEffect('sepia');
   createSlider(0.1, 1);
 });
 
 effectMarvin.addEventListener('click', () => {
   hideUiSlider();
-  changeImageEffect('effects__preview--marvin');
+  changeImageEffect('marvin');
   createSlider(1, 100);
 });
 
 effectPhobos.addEventListener('click', () => {
   hideUiSlider();
-  changeImageEffect('effects__preview--phobos');
+  changeImageEffect('phobos');
   createSlider(0.1, 3);
 });
 
 effectHeat.addEventListener('click', () => {
   hideUiSlider();
-  changeImageEffect('effects__preview--heat');
+  changeImageEffect('heat');
   createSlider(0.1, 1);
 });
 
@@ -123,4 +124,4 @@ scaleValueBigger.addEventListener('click', () => {
   scaleValue.value = `${postScaleValue}%`;
 });
 
-export {workWithScale};
+export {workWithScale, postScaleValue, actualEffect};

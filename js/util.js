@@ -10,9 +10,11 @@ const getRandomInt = function(from, to) {
 };
 getRandomInt(15, 90);
 
-const checkLength = function(checkedElement, maxLength) {
-  return checkedElement.length === maxLength;
+// нельзя указать больше пяти хэш-тегов
+// максимальная длина одного хэш-тега 20 символов, включая решётку;
+// максимальная длина комментария 140
+const checkLengthElement = function(checkedElement, maxLength) {
+  return checkedElement.length <= maxLength;
 };
-checkLength('abc', 3);
 
-export {getRandomInt};
+export {getRandomInt, checkLengthElement};
