@@ -1,11 +1,12 @@
-
 import { drawElement } from './draw-pictures.js';
-import { addAttributesToForm, checkValidHash, checkValidComment, clearAllValue } from './edit-photo/editForm.js';
+import { addAttributesToForm, checkValidHash, checkValidComment, clearAllValues } from './edit-photo/edit-form.js';
 import { workWithScale, postScaleValue, actualEffect } from './edit-photo/photo-edit-logic.js';
 import { ESC } from './constants.js';
 import { openModal, closeModal, isOpenModal } from './modal/modal.js';
-import { openFullPhoto, isOpenFullPhoto, closeFullPhoto } from './full-photo/fullphoto.js';
+import { openFullPhoto, isOpenFullPhoto, closeFullPhoto } from './full-photo/full-photo.js';
 import { getData, sendData } from './remote-work.js';
+import { setActiveFilter, getRandomPhotos, getSortPhotosByComments, setActiveFilterButton } from './imagefilter/image-filter.js';
+import { debounce } from './util.js';
 
 const photoContainer = document.querySelector('.pictures');
 const inputHashtag = document.querySelector('input.text__hashtags');
@@ -17,6 +18,12 @@ const postForm = document.querySelector('#upload-select-image');
 const editPhotoModalWindow = document.querySelector('.img-upload__overlay');
 
 let photosFromServer = null;
+
+const FILTERS = {
+  'filter-default': () => photosFromServer,
+  'filter-random': getRandomPhotos,
+  'filter-discussed': getSortPhotosByComments,
+};
 
 function clearErrorBorder() {
   inputHashtag.classList.remove('error_field');
@@ -33,7 +40,7 @@ if (inputPhoto) {
 
 function closeModalAndClearValues() {
   closeModal(editPhotoModalWindow);
-  clearAllValue(inputPhoto, inputHashtag, inputComment);
+  clearAllValues(inputPhoto, inputHashtag, inputComment);
 }
 
 if (closeBtn) {
@@ -42,7 +49,7 @@ if (closeBtn) {
   });
 }
 
-submitBtn.addEventListener('click', (event) => {
+submitBtn.addEventListener('click', (evt) => {
   const isValidHashTag = checkValidHash(inputHashtag);
   const isValidComment = checkValidComment(inputComment);
 
@@ -58,7 +65,7 @@ submitBtn.addEventListener('click', (event) => {
   formData.append('filename', inputPhoto.files[0]);
   formData.append('scale', postScaleValue);
   formData.append('effect', actualEffect);
-  event.preventDefault();
+  evt.preventDefault();
 
   sendData(formData)
     .then(() => {
@@ -84,13 +91,26 @@ document.addEventListener('keydown', (element) => {
 getData().then((photos) => {
   photosFromServer = photos;
   drawElement(photos, photoContainer);
+  setActiveFilter();
 });
 
 document.addEventListener('click', (evt) => {
   const element = evt.target;
   const isPhoto = element.closest('.picture');
+  const isImageFilterButton = element.classList.contains('img-filters__button');
   if (isPhoto) {
     openFullPhoto(element, photosFromServer);
+  }
+
+  if (isImageFilterButton) {
+    const whichFilter = element.getAttribute('id');
+    const sortFunction =  FILTERS[whichFilter];
+    const newPhotos = sortFunction(photosFromServer);
+    const oldPhotos = document.querySelectorAll('.picture');
+    oldPhotos.forEach((lastPhoto) => lastPhoto.remove());
+    setActiveFilterButton(element);
+    const debounceDrawElement =  debounce(() => drawElement(newPhotos, photoContainer), 500);
+    debounceDrawElement();
   }
 });
 

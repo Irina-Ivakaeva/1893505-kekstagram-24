@@ -8,7 +8,6 @@ const getRandomInt = function(from, to) {
   }
   return Math.floor(Math.random() * (to - from)) + from;
 };
-getRandomInt(15, 90);
 
 // нельзя указать больше пяти хэш-тегов
 // максимальная длина одного хэш-тега 20 символов, включая решётку;
@@ -17,4 +16,12 @@ const checkLengthElement = function(checkedElement, maxLength) {
   return checkedElement.length <= maxLength;
 };
 
-export {getRandomInt, checkLengthElement};
+function debounce(func, timeout){
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => func.apply(this,args), timeout);
+  };
+}
+
+export {getRandomInt, checkLengthElement, debounce};
