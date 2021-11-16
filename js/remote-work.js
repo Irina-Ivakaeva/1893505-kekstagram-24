@@ -1,4 +1,4 @@
-import {showErrorSend, showSuccessSend} from './modal/AjaxModals.js';
+import {showErrorSend, showSuccessSend} from './modal/ajax-modals.js';
 import {showAlert} from './alerts/send-alert.js';
 
 function request(url, options, onSuccess, onFailed) {

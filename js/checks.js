@@ -1,4 +1,4 @@
-import { checkLengthElement } from './util.js';
+import {checkLengthElement} from './util.js';
 
 const HASHTAGS_SETTINGS = {
   REGEXP: /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/,

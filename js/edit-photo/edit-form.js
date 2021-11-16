@@ -33,10 +33,10 @@ function addAttributesToForm(postForm) {
   postForm.enctype = 'multipart/form-data';
 }
 
-function clearAllValue(inputPhoto, inputHashtag, inputComment) {
+function clearAllValues(inputPhoto, inputHashtag, inputComment) {
   clearValue(inputPhoto);
   clearValue(inputHashtag);
   clearValue(inputComment);
 }
 
-export {addAttributesToForm,  checkValidHash, checkValidComment, clearAllValue};
+export {addAttributesToForm,  checkValidHash, checkValidComment, clearAllValues};

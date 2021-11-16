@@ -24,12 +24,12 @@ function generatePhotoTemplate(template, photos) {
   return fragment;
 }
 
-const drawElement = function(photos, appendNode) {
+function drawElement(photos, appendNode) {
   const templateFragment = getHTMLTemplate('#picture');
   const template = templateFragment.querySelector('a');
 
   const arrayPhotoTemplate = generatePhotoTemplate(template, photos);
   appendNode.appendChild(arrayPhotoTemplate);
-};
+}
 
 export {drawElement};
