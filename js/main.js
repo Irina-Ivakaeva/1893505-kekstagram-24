@@ -2,12 +2,13 @@ import { drawElement } from './draw-pictures.js';
 import { addAttributesToForm, checkValidHash, checkValidComment, clearAllValues } from './edit-photo/edit-form.js';
 import { workWithScale, postScaleValue, actualEffect } from './edit-photo/photo-edit-logic.js';
 import { ESC } from './constants.js';
-import { openModal, closeModal, isOpenModal } from './modal/modal.js';
+import { openModal, closeModal, getModalStatusOpen } from './modal/modal.js';
 import { openFullPhoto, isOpenFullPhoto, closeFullPhoto } from './full-photo/full-photo.js';
 import { getData, sendData } from './remote-work.js';
 import { setActiveFilter, getRandomPhotos, getSortPhotosByComments, setActiveFilterButton } from './imagefilter/image-filter.js';
-import { debounce } from './util.js';
+import { debounce } from './utils/debounce.js';
 
+const isOpenModal = getModalStatusOpen;
 const photoContainer = document.querySelector('.pictures');
 const inputHashtag = document.querySelector('input.text__hashtags');
 const inputComment = document.querySelector('textarea.text__description');

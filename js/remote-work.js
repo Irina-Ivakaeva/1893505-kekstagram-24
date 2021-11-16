@@ -17,8 +17,7 @@ const getData = () => {
   const options = {};
   const failedFunction = () => showAlert('При загрузке данных произошла ошибка');
   return request(url, options, null, failedFunction)
-    .then((response) => response.json())
-    .then((data) => data);
+    .then((response) => response.json());
 };
 
 const sendData = (post) => {
