@@ -79,7 +79,7 @@ document.addEventListener('keydown', (element) => {
     return closeFullPhoto();
   }
 
-  if (keyCode === ESC && getModalStatusOpen) {
+  if (keyCode === ESC && getModalStatusOpen()) {
     const isActiveHashtag = inputHashtag === document.activeElement;
     const isActiveComment = inputComment === document.activeElement;
     if (keyCode === ESC && !isActiveHashtag && !isActiveComment) {
