@@ -97,4 +97,8 @@ loader.addEventListener('click', () => {
   addComments(photoObject.comments);
 });
 
-export {openFullPhoto, isOpenFullPhoto, closeFullPhoto};
+function getStatusFullPhoto() {
+  return isOpenFullPhoto;
+}
+
+export {openFullPhoto, getStatusFullPhoto, closeFullPhoto};

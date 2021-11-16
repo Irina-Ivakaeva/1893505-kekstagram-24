@@ -20,4 +20,5 @@ function closeModal(modalWindow) {
 function getModalStatusOpen() {
   return isOpenModal;
 }
+
 export {openModal, closeModal, getModalStatusOpen};
