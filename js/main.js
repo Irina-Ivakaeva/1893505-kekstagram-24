@@ -2,11 +2,11 @@ import { drawElement } from './draw-pictures.js';
 import { addAttributesToForm, checkValidHash, checkValidComment, clearAllValues } from './edit-photo/edit-form.js';
 import { workWithScale, postScaleValue, actualEffect } from './edit-photo/photo-edit-logic.js';
 import { ESC } from './constants.js';
-import { openModal, closeModal, isOpenModal } from './modal/modal.js';
-import { openFullPhoto, isOpenFullPhoto, closeFullPhoto } from './full-photo/full-photo.js';
+import { openModal, closeModal, getModalStatusOpen } from './modal/modal.js';
+import { openFullPhoto, getStatusFullPhoto, closeFullPhoto } from './full-photo/full-photo.js';
 import { getData, sendData } from './remote-work.js';
 import { setActiveFilter, getRandomPhotos, getSortPhotosByComments, setActiveFilterButton } from './imagefilter/image-filter.js';
-import { debounce } from './util.js';
+import { debounce } from './utils/debounce.js';
 
 const photoContainer = document.querySelector('.pictures');
 const inputHashtag = document.querySelector('input.text__hashtags');
@@ -16,14 +16,13 @@ const closeBtn = document.querySelector('#upload-cancel');
 const submitBtn = document.querySelector('button#upload-submit');
 const postForm = document.querySelector('#upload-select-image');
 const editPhotoModalWindow = document.querySelector('.img-upload__overlay');
-
-let photosFromServer = null;
-
 const FILTERS = {
-  'filter-default': () => photosFromServer,
+  'filter-default': (value) => value,
   'filter-random': getRandomPhotos,
   'filter-discussed': getSortPhotosByComments,
 };
+
+let photosFromServer = null;
 
 function clearErrorBorder() {
   inputHashtag.classList.remove('error_field');
@@ -75,11 +74,11 @@ submitBtn.addEventListener('click', (evt) => {
 
 document.addEventListener('keydown', (element) => {
   const keyCode = element.key;
-  if (keyCode === ESC && isOpenFullPhoto) {
+  if (keyCode === ESC && getStatusFullPhoto()) {
     return closeFullPhoto();
   }
 
-  if (keyCode === ESC && isOpenModal) {
+  if (keyCode === ESC && getModalStatusOpen()) {
     const isActiveHashtag = inputHashtag === document.activeElement;
     const isActiveComment = inputComment === document.activeElement;
     if (keyCode === ESC && !isActiveHashtag && !isActiveComment) {

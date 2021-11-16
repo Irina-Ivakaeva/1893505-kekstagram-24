@@ -8,25 +8,25 @@ function workWithModal(button) {
   elementRemoved = document.querySelector('section[data="removed"]');
   openModal(elementRemoved);
   button.addEventListener('click', () => {
-    elementRemoved.remove();
     closeModal(elementRemoved);
-  });
-
-  document.addEventListener('keydown', (element) => {
-    const keyCode = element.key;
-    if (keyCode === ESC && elementRemoved) {
-      elementRemoved.remove();
-      closeModal(elementRemoved);
-    }
+    elementRemoved.remove();
   });
 }
+
+document.addEventListener('keydown', (element) => {
+  const keyCode = element.key;
+  if (keyCode === ESC && elementRemoved) {
+    closeModal(elementRemoved);
+    elementRemoved.remove();
+  }
+});
 
 document.addEventListener('click', (el) => {
   const isErrorInfoWindow = el.target.classList.contains('error__inner');
   const isSuccessInfoWindow = el.target.classList.contains('success__inner');
   if(!(isErrorInfoWindow || isSuccessInfoWindow) && elementRemoved) {
-    elementRemoved.remove();
     closeModal(elementRemoved);
+    elementRemoved.remove();
   }
 });
 

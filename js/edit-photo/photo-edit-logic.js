@@ -1,11 +1,7 @@
-
-let postScaleValue;
 const mainImage = document.querySelector('.img-upload__preview');
 const scaleValue = document.querySelector('.scale__control--value');
 const scaleValueSmaller = document.querySelector('.scale__control--smaller');
 const scaleValueBigger = document.querySelector('.scale__control--bigger');
-
-let actualEffect;
 const effectOriginal = document.querySelector('.effects__preview--none');
 const effectChrome = document.querySelector('.effects__preview--chrome');
 const effectSepia = document.querySelector('.effects__preview--sepia');
@@ -14,6 +10,9 @@ const effectPhobos = document.querySelector('.effects__preview--phobos');
 const effectHeat = document.querySelector('.effects__preview--heat');
 
 const sliderElement = document.querySelector('.effect-level__slider');
+
+let postScaleValue;
+let actualEffect;
 
 function changeImageEffect(effectType) {
   mainImage.classList.remove(`effects__preview--${actualEffect}`);
@@ -29,7 +28,7 @@ function createSlider(stepEffect, maxSize) {
         min: 0,
         max: maxSize,
       },
-      start: (maxSize / 2),
+      start: maxSize,
       step: stepEffect,
     });
   }

@@ -17,4 +17,8 @@ function closeModal(modalWindow) {
   toggleModal(modalWindow, false);
 }
 
-export {openModal, closeModal, isOpenModal};
+function getModalStatusOpen() {
+  return isOpenModal;
+}
+
+export {openModal, closeModal, getModalStatusOpen};
