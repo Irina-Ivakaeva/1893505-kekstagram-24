@@ -8,9 +8,9 @@ const fullPhotoCommentsCount = fullPhoto.querySelector('.comments-count');
 const socialCommentsWrapper = fullPhoto.querySelector('.social__comments');
 const socialCaption = fullPhoto.querySelector('.social__caption');
 const btnFullPhotoClose = document.querySelector('#picture-cancel');
-const avatarAlt = 'Аватар комментатора фотографии';
-const avatarSize = '35';
-const maxCountComments = 5;
+const AVATAR_ALT = 'Аватар комментатора фотографии';
+const AVATAR_SIZE = '35';
+const MAX_COUNT_COMMENTS = 5;
 let isOpenFullPhoto = false;
 let commentCount = 0;
 let photoObject;
@@ -44,9 +44,9 @@ function appendComment(fragment, comment) {
   const pTag = document.createElement('p');
   pTag.classList.add('social__text');
   imgTag.src = comment.avatar;
-  imgTag.alt = avatarAlt;
-  imgTag.width = avatarSize;
-  imgTag.height = avatarSize;
+  imgTag.alt = AVATAR_ALT;
+  imgTag.width = AVATAR_SIZE;
+  imgTag.height = AVATAR_SIZE;
   pTag.textContent = comment.message;
   liTag.appendChild(imgTag);
   liTag.appendChild(pTag);
@@ -60,7 +60,7 @@ function addComments(arrayComments) {
   if (arrayComments.length <= 5) {
     loader.classList.add('hidden');
   }
-  for (let el = 0; el < maxCountComments; el++) {
+  for (let el = 0; el < MAX_COUNT_COMMENTS; el++) {
     if (commentCount === arrayComments.length) {
       loader.classList.add('hidden');
       break;

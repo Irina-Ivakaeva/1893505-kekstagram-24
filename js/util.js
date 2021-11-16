@@ -16,12 +16,4 @@ const checkLengthElement = function(checkedElement, maxLength) {
   return checkedElement.length <= maxLength;
 };
 
-function debounce(func, timeout){
-  let timer;
-  return (...args) => {
-    clearTimeout(timer);
-    timer = setTimeout(() => func.apply(this,args), timeout);
-  };
-}
-
-export {getRandomInt, checkLengthElement, debounce};
+export {getRandomInt, checkLengthElement};
