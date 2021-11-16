@@ -16,14 +16,13 @@ const closeBtn = document.querySelector('#upload-cancel');
 const submitBtn = document.querySelector('button#upload-submit');
 const postForm = document.querySelector('#upload-select-image');
 const editPhotoModalWindow = document.querySelector('.img-upload__overlay');
-
-let photosFromServer = null;
-
 const FILTERS = {
-  'filter-default': () => photosFromServer,
+  'filter-default': (value) => value,
   'filter-random': getRandomPhotos,
   'filter-discussed': getSortPhotosByComments,
 };
+
+let photosFromServer = null;
 
 function clearErrorBorder() {
   inputHashtag.classList.remove('error_field');

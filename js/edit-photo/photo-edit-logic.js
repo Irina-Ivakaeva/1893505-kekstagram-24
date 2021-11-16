@@ -28,7 +28,7 @@ function createSlider(stepEffect, maxSize) {
         min: 0,
         max: maxSize,
       },
-      start: (maxSize / 2),
+      start: maxSize,
       step: stepEffect,
     });
   }
