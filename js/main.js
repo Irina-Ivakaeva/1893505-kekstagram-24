@@ -22,6 +22,8 @@ const FILTERS = {
   'filter-discussed': getSortPhotosByComments,
 };
 
+const TIMEOUT_DELAY = 500;
+
 let photosFromServer = null;
 
 function clearErrorBorder() {
@@ -108,7 +110,7 @@ document.addEventListener('click', (evt) => {
     const oldPhotos = document.querySelectorAll('.picture');
     oldPhotos.forEach((lastPhoto) => lastPhoto.remove());
     setActiveFilterButton(element);
-    const debounceDrawElement =  debounce(() => drawElement(newPhotos, photoContainer), 500);
+    const debounceDrawElement =  debounce(() => drawElement(newPhotos, photoContainer), TIMEOUT_DELAY);
     debounceDrawElement();
   }
 });

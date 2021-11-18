@@ -8,6 +8,8 @@ function request(url, options, onSuccess, onFailed) {
         onSuccess && onSuccess();
         return response;
       }
+    })
+    .catch(() => {
       onFailed && onFailed();
     });
 }

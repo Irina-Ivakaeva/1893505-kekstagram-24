@@ -11,6 +11,12 @@ const effectHeat = document.querySelector('.effects__preview--heat');
 
 const sliderElement = document.querySelector('.effect-level__slider');
 
+const MIN_SCALE_VALUE = 25;
+const MAX_SCALE_VALUE = 100;
+const SCALE_STEP = 25;
+
+const MIN_SLIDER_VALUE = 0;
+
 let postScaleValue;
 let actualEffect;
 
@@ -25,7 +31,7 @@ function createSlider(stepEffect, maxSize) {
   if (sliderElement.noUiSlider === undefined) {
     noUiSlider.create(sliderElement, {
       range: {
-        min: 0,
+        min: MIN_SLIDER_VALUE,
         max: maxSize,
       },
       start: maxSize,
@@ -63,11 +69,12 @@ function hideUiSlider() {
 }
 
 function workWithScale() {
-  postScaleValue = 100;
+  postScaleValue = MAX_SCALE_VALUE;
   scaleValue.value = `${postScaleValue}%`;
   mainImage.style.transform = (`scale(${postScaleValue / 100})`);
   changeImageEffect('none');
   hideUiSlider();
+  effectOriginal.closest('.effects__label').click();
 }
 
 effectOriginal.addEventListener('click', () => {
@@ -107,18 +114,18 @@ effectHeat.addEventListener('click', () => {
 
 // Уменьшение размера фото
 scaleValueSmaller.addEventListener('click', () => {
-  if (postScaleValue > 25) {
-    postScaleValue -= 25;
-    mainImage.style.transform = (`scale(${postScaleValue / 100})`);
+  if (postScaleValue > MIN_SCALE_VALUE) {
+    postScaleValue -= SCALE_STEP;
+    mainImage.style.transform = (`scale(${postScaleValue / MAX_SCALE_VALUE})`);
   }
   scaleValue.value = `${postScaleValue}%`;
 });
 
 // Увеличение размера фото
 scaleValueBigger.addEventListener('click', () => {
-  if (postScaleValue < 100) {
-    postScaleValue += 25;
-    mainImage.style.transform = (`scale(${postScaleValue / 100})`);
+  if (postScaleValue < MAX_SCALE_VALUE) {
+    postScaleValue += SCALE_STEP;
+    mainImage.style.transform = (`scale(${postScaleValue / MAX_SCALE_VALUE})`);
   }
   scaleValue.value = `${postScaleValue}%`;
 });
