@@ -8,6 +8,7 @@ function request(url, options, onSuccess, onFailed) {
         onSuccess && onSuccess();
         return response;
       }
+      throw new Error(`При загрузке данных произошла ошибка: ${response.status} ${response.statusText}`);
     })
     .catch(() => {
       onFailed && onFailed();
