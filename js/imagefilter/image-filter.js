@@ -1,4 +1,5 @@
 import { getRandomInt } from '../util.js';
+const RANDOM_PHOTOS_COUNT = 10;
 
 const imageFiltersWrapper = document.querySelector('.img-filters');
 let lastActive = document.querySelector('.img-filters__button--active');
@@ -24,7 +25,7 @@ function setActiveFilterButton(filterButton) {
 function getRandomPhotos(photos) {
   const photosCopy = photos.slice();
   const newPhotos = [];
-  for (let index = 0; index < 10; index++) {
+  for (let index = 0; index < RANDOM_PHOTOS_COUNT; index++) {
     const generatedRandomItem = getRandomInt(0, photosCopy.length);
     newPhotos.push(photosCopy[generatedRandomItem]);
     photosCopy.splice(generatedRandomItem, 1);

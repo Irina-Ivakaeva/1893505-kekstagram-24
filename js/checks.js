@@ -15,11 +15,11 @@ function checkValues(hashTag) {
 
 // один и тот же хэш-тег не может быть использован дважды;
 function checkDoubleHashTag(array) {
-  const trueArray = [];
+  const hashTags = [];
   let count = 0;
   array.forEach((element) => {
-    if (trueArray.indexOf(element.toUpperCase()) === -1) {
-      trueArray.push(element.toUpperCase());
+    if (hashTags.indexOf(element.toUpperCase()) === -1) {
+      hashTags.push(element.toUpperCase());
     } else {
       count++;
     }

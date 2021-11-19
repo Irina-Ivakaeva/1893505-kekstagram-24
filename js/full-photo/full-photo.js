@@ -57,7 +57,7 @@ function appendComment(fragment, comment) {
 
 function addComments(arrayComments) {
   const fragment = document.createDocumentFragment();
-  if (arrayComments.length <= 5) {
+  if (arrayComments.length <= MAX_COUNT_COMMENTS) {
     loader.classList.add('hidden');
   }
   for (let el = 0; el < MAX_COUNT_COMMENTS; el++) {

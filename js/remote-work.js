@@ -18,8 +18,8 @@ function request(url, options, onSuccess, onFailed) {
 const getData = () => {
   const url = 'https://24.javascript.pages.academy/kekstagram/data';
   const options = {};
-  const failedFunction = () => showAlert('При загрузке данных произошла ошибка');
-  return request(url, options, null, failedFunction)
+  const returnFailedFunction = () => showAlert('При загрузке данных произошла ошибка');
+  return request(url, options, null, returnFailedFunction)
     .then((response) => response.json());
 };
 
@@ -29,9 +29,9 @@ const sendData = (post) => {
     method: 'POST',
     body:post,
   };
-  const failedFunction = showErrorSend;
-  const successFunction = showSuccessSend;
-  return request(url, options, successFunction, failedFunction);
+  const returnFailedFunction = showErrorSend;
+  const returnSuccessFunction = showSuccessSend;
+  return request(url, options, returnSuccessFunction, returnFailedFunction);
 };
 
 export {getData, sendData};
